@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "520554854749",
+    "project_id": "weightmanager-f1028",
+    "storage_bucket": "weightmanager-f1028.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:520554854749:android:a66bae69a661f1072290b4",
+        "android_client_info": {
+          "package_name": "kr.co.weightmanager"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "520554854749-alqi3sevtv16u9veksf63m0a2gr3ferc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBplqPYPhlfEXK7EQP4-vypGBDRkmCdwEU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "520554854749-alqi3sevtv16u9veksf63m0a2gr3ferc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
