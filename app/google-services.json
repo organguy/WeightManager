@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "520554854749-3ds9afcil3v5fk1j40cvo41dnao083il.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "kr.co.weightmanager",
+            "certificate_hash": "d8877380cdd93d30fc24863f3c3b46118e175b2c"
+          }
+        },
+        {
           "client_id": "520554854749-alqi3sevtv16u9veksf63m0a2gr3ferc.apps.googleusercontent.com",
           "client_type": 3
         }
