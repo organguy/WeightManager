@@ -21,7 +21,7 @@ import kr.co.weightmanager.databinding.ActivityMainBinding
 class IntroActivity : AppCompatActivity() {
 
 
-    lateinit var binding : ActivityIntroBinding;
+    lateinit var binding : ActivityIntroBinding
 
     private lateinit var getResult: ActivityResultLauncher<Intent>
     private lateinit var client: GoogleSignInClient
@@ -87,6 +87,8 @@ class IntroActivity : AppCompatActivity() {
     }
 
     private fun gotoMain(){
-        Toast.makeText(this, "gotoMain", Toast.LENGTH_SHORT).show()
+        var intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 }
