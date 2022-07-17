@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">WeightManager</string>
+    <string name="msg_write_weight">오늘의 몸무게를 입력해 주세요.</string>
+    <string name="hint_write_weight">80.0</string>
+    <string name="kilogram">kg</string>
+    <string name="cancel">취소</string>
+    <string name="ok">확인</string>
 </resources>
