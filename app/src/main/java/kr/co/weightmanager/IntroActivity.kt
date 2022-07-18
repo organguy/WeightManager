@@ -1,11 +1,13 @@
 package kr.co.weightmanager
 
+import android.content.DialogInterface
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -17,6 +19,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import kr.co.weightmanager.databinding.ActivityIntroBinding
 import kr.co.weightmanager.databinding.ActivityMainBinding
+import kr.co.weightmanager.util.UtilSystem
 
 class IntroActivity : AppCompatActivity() {
 
@@ -33,15 +36,32 @@ class IntroActivity : AppCompatActivity() {
         binding = ActivityIntroBinding.inflate(layoutInflater);
         setContentView(binding.root)
 
-        auth = FirebaseAuth.getInstance()
+        checkNetwork()
+    }
 
-        if(auth.currentUser != null){
-            gotoMain()
+    private fun checkNetwork(){
+        if(UtilSystem.checkNetworkState(this)){
+            auth = FirebaseAuth.getInstance()
+
+            if(auth.currentUser != null){
+                gotoMain()
+            }else{
+                initGoogleLogin()
+            }
         }else{
-            //setResultListener();
-            initGoogleLogin()
+            showNetworkCheckDialog()
         }
     }
+
+    private fun showNetworkCheckDialog(){
+        AlertDialog.Builder(this)
+            .setTitle(R.string.network_disconnect)
+            .setMessage(R.string.msg_network_disconnect)
+            .setPositiveButton(R.string.ok, DialogInterface.OnClickListener { dialogInterface, i ->
+                finish()
+            }).show()
+    }
+
 
     private fun initGoogleLogin(){
         val options = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -66,9 +86,6 @@ class IntroActivity : AppCompatActivity() {
         }
 
         binding.loginButton.setOnClickListener {
-            // 로그인 요청
-            //startActivityForResult(client.signInIntent, 1)
-
             getResult.launch(client.signInIntent)
         }
     }

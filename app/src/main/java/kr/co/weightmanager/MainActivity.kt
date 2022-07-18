@@ -29,7 +29,6 @@ class MainActivity : AppCompatActivity() {
         initData()
         initView()
 
-        //insertWeight()
         isTodayWeightExist(UtilDate.getCurrentDate());
     }
 
@@ -49,13 +48,11 @@ class MainActivity : AppCompatActivity() {
             .get()
             .addOnCompleteListener {
 
-               /* if(it.result.size() > 0){
+                if(it.result.size() > 0){
                     Toast.makeText(this, "오늘 입력한 몸무게 데이터가 있습니다.", Toast.LENGTH_SHORT).show()
                 }else{
                     showWeightDialog()
-                }*/
-
-                showWeightDialog()
+                }
             }
     }
 
