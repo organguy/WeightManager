@@ -1,13 +1,9 @@
 package kr.co.weightmanager.maanger
 
-import android.content.Context
-import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import io.realm.RealmList
 import kr.co.weightmanager.data.WeightData
 import kr.co.weightmanager.interfaces.OnResultListener
-import kr.co.weightmanager.util.OgLog
 import kr.co.weightmanager.util.UtilDate
 
 object FirestoreManager {
