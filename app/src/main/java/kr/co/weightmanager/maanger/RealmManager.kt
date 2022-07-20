@@ -41,4 +41,10 @@ object RealmManager {
             Realm.getDefaultInstance().insertOrUpdate(weightData)
         Realm.getDefaultInstance().commitTransaction()
     }
+
+    fun deleteAll(){
+        Realm.getDefaultInstance().beginTransaction()
+            Realm.getDefaultInstance().delete(RmWeightData::class.java)
+        Realm.getDefaultInstance().commitTransaction()
+    }
 }

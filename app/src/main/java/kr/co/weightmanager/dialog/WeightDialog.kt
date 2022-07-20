@@ -56,7 +56,7 @@ class WeightDialog() : DialogFragment() {
 
         if(!TextUtils.isEmpty(binding.etWeight.text)){
             if(mListener != null){
-                var weight = binding.etWeight.text.toString().toFloat()
+                var weight = binding.etWeight.text.toString()
                 mListener!!.onResult(weight)
                 dismiss()
             }

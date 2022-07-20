@@ -3,10 +3,14 @@ package kr.co.weightmanager.realm
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 
-class RmWeightData : RealmObject(){
+open class RmWeightData : RealmObject(){
 
     @PrimaryKey
     var dateTime:String? = null
     var uid: String? = null
-    var weight: Float = 0.0f
+    var weight: String = "0.0"
+
+    override fun toString(): String {
+        return "$dateTime  _ $uid _ $weight"
+    }
 }

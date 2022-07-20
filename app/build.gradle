@@ -1,7 +1,8 @@
 plugins {
     id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
     id 'realm-android'
-    id 'org.jetbrains.kotlin.android'
     id 'com.google.gms.google-services'
 }
 

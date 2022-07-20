@@ -2,8 +2,10 @@ package kr.co.weightmanager.maanger
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.FirebaseFirestoreException
 import kr.co.weightmanager.data.WeightData
 import kr.co.weightmanager.interfaces.OnResultListener
+import kr.co.weightmanager.util.OgLog
 import kr.co.weightmanager.util.UtilDate
 
 object FirestoreManager {
@@ -19,17 +21,21 @@ object FirestoreManager {
             .whereGreaterThan("dateTime", dateTime)
             .get()
             .addOnCompleteListener { it ->
+                try{
+                    for(document in it.result){
+                        var weightData = WeightData()
+                        weightData.dateTime = document["dateTime"] as String
+                        weightData.uid = document["uid"] as String
+                        weightData.weight = document["weight"] as String
 
-                for(document in it.result){
-                    var weightData = WeightData()
-                    weightData.dateTime = document["dateTime"] as String
-                    weightData.uid = document["uid"] as String
-                    weightData.weight = document["weight"] as Float
+                        weightList.add(weightData)
+                    }
 
-                    weightList.add(weightData)
+                    resultListener.onSuccess(weightList)
+                }catch (e: FirebaseFirestoreException) {
+                    OgLog.d(e.localizedMessage)
+                    resultListener.onSuccess(weightList)
                 }
-
-                resultListener.onSuccess(weightList)
             }
             .addOnFailureListener {
                 resultListener.onFail()
@@ -39,7 +45,7 @@ object FirestoreManager {
             }
     }
 
-    fun insertWeightData(weight: Float, resultListener: OnResultListener<WeightData>){
+    fun insertWeightData(weight: String, resultListener: OnResultListener<WeightData>){
 
         var weightData = WeightData()
         weightData.uid = FirebaseAuth.getInstance().uid

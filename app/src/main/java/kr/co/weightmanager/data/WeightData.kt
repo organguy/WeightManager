@@ -2,6 +2,6 @@ package kr.co.weightmanager.data
 
 class WeightData {
     var uid: String? = null
-    var weight: Float = 0.0f
+    var weight: String = "0.0"
     var dateTime:String? = null
 }

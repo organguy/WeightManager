@@ -16,6 +16,7 @@ import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
+import io.realm.RealmResults
 import kr.co.weightmanager.data.WeightData
 import kr.co.weightmanager.databinding.ActivityIntroBinding
 import kr.co.weightmanager.dialog.WeightDialog
@@ -24,6 +25,7 @@ import kr.co.weightmanager.interfaces.OnResultListener
 import kr.co.weightmanager.maanger.FirestoreManager
 import kr.co.weightmanager.maanger.RealmManager
 import kr.co.weightmanager.realm.RmWeightData
+import kr.co.weightmanager.util.OgLog
 import kr.co.weightmanager.util.UtilSystem
 
 class IntroActivity : AppCompatActivity() {
@@ -68,6 +70,7 @@ class IntroActivity : AppCompatActivity() {
         if(auth.currentUser == null){
             initGoogleLogin()
         }else{
+            OgLog.d(auth.currentUser!!.uid)
             checkWeightData()
         }
     }
@@ -149,14 +152,14 @@ class IntroActivity : AppCompatActivity() {
         val weightDialog = WeightDialog()
         weightDialog.isCancelable = false
         weightDialog.setOnInsertWeightListener(object : InsertWeightListener {
-            override fun onResult(weight: Float) {
+            override fun onResult(weight: String) {
                 insertTodayWeight(weight)
             }
         })
         weightDialog.show(supportFragmentManager, "dialog")
     }
 
-    private fun insertTodayWeight(weight: Float){
+    private fun insertTodayWeight(weight: String){
         FirestoreManager.insertWeightData(weight, object: OnResultListener<WeightData>{
             override fun onSuccess(data: WeightData) {
                 Toast.makeText(this@IntroActivity, R.string.msg_write_weight_success, Toast.LENGTH_SHORT).show()
@@ -180,6 +183,7 @@ class IntroActivity : AppCompatActivity() {
     }
 
     private fun gotoMain(){
+
         var intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
         finish()

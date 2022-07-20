@@ -14,8 +14,8 @@ class MyApplication : Application() {
 
     private fun initRealm(){
         Realm.init(this)
-        var config = RealmConfiguration
-            .Builder()
+        var config = RealmConfiguration.Builder()
+            .allowWritesOnUiThread(true)
             .deleteRealmIfMigrationNeeded()
             .build()
 
