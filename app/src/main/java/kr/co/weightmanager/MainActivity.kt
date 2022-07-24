@@ -5,9 +5,8 @@ import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
-import com.github.mikephil.charting.data.Entry
-import com.github.mikephil.charting.data.LineData
-import com.github.mikephil.charting.data.LineDataSet
+import com.github.mikephil.charting.data.*
+import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 import io.realm.RealmList
 import kr.co.weightmanager.databinding.ActivityMainBinding
@@ -47,19 +46,19 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun initChart(){
-        var dataVals = ArrayList<Entry>()
+        var dataVals = ArrayList<BarEntry>()
 
         for(i: Int in 0 until weightList.size){
-            dataVals.add(Entry(i.toFloat(), weightList[i]!!.weight.toFloat()))
+            dataVals.add(BarEntry(i.toFloat(), weightList[i]!!.weight.toFloat()))
         }
 
-        var lineDataSet = LineDataSet(dataVals, "전체 현황")
-        var dataSets = ArrayList<ILineDataSet>()
-        dataSets.add(lineDataSet)
+        var barDataSet = BarDataSet(dataVals, "전체 현황")
+        var dataSets = ArrayList<IBarDataSet>()
+        dataSets.add(barDataSet)
 
-        var data = LineData(dataSets)
-        binding.lcChart.data = data
-        binding.lcChart.invalidate()
+        var data = BarData(dataSets)
+        binding.bcChart.data = data
+        binding.bcChart.invalidate()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
