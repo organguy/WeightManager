@@ -7,9 +7,11 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/tb_toolbar"
@@ -19,8 +21,15 @@
 
         </androidx.appcompat.widget.Toolbar>
 
+        <com.github.mikephil.charting.charts.LineChart
+            android:id="@+id/lc_chart"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#CFCFCF"
+            />
 
-    </RelativeLayout>
+
+    </LinearLayout>
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nv_navigation"

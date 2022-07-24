@@ -1,23 +1,23 @@
 package kr.co.weightmanager
 
-import androidx.appcompat.app.AppCompatActivity
+import android.graphics.Color
 import android.os.Bundle
 import android.view.MenuItem
-
-import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
-import kr.co.weightmanager.data.WeightData
+import com.github.mikephil.charting.data.Entry
+import com.github.mikephil.charting.data.LineData
+import com.github.mikephil.charting.data.LineDataSet
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
+import io.realm.RealmList
 import kr.co.weightmanager.databinding.ActivityMainBinding
-import kr.co.weightmanager.dialog.WeightDialog
-import kr.co.weightmanager.interfaces.InsertWeightListener
-import kr.co.weightmanager.util.OgLog
-import kr.co.weightmanager.util.UtilDate
+import kr.co.weightmanager.maanger.RealmManager
+import kr.co.weightmanager.realm.RmWeightData
 
 class MainActivity : AppCompatActivity() {
 
     lateinit var binding : ActivityMainBinding
+    var  weightList = RealmList<RmWeightData>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,10 +28,11 @@ class MainActivity : AppCompatActivity() {
         initData()
         initView()
         initNavi()
+        initChart()
     }
 
     fun initData(){
-
+        weightList.addAll(RealmManager.getWeightResults())
     }
 
     fun initView(){
@@ -43,6 +44,22 @@ class MainActivity : AppCompatActivity() {
 
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         supportActionBar!!.setHomeAsUpIndicator(R.drawable.ic_baseline_dehaze_24)
+    }
+
+    fun initChart(){
+        var dataVals = ArrayList<Entry>()
+
+        for(i: Int in 0 until weightList.size){
+            dataVals.add(Entry(i.toFloat(), weightList[i]!!.weight.toFloat()))
+        }
+
+        var lineDataSet = LineDataSet(dataVals, "전체 현황")
+        var dataSets = ArrayList<ILineDataSet>()
+        dataSets.add(lineDataSet)
+
+        var data = LineData(dataSets)
+        binding.lcChart.data = data
+        binding.lcChart.invalidate()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
