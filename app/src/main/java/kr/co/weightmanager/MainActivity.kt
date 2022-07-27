@@ -1,5 +1,6 @@
 package kr.co.weightmanager
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
@@ -20,6 +21,8 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var binding : ActivityMainBinding
     var  weightList = RealmList<RmWeightData>()
+    private lateinit var todayWeightData: RmWeightData
+    private var dailyDiff = 0.0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,10 +38,22 @@ class MainActivity : AppCompatActivity() {
 
     fun initData(){
         weightList.addAll(RealmManager.getWeightResults())
+        todayWeightData = RealmManager.getTodayWeightData()
+        dailyDiff = RealmManager.getDailyDiff()
     }
 
+    @SuppressLint("SetTextI18n")
     fun initView(){
+        binding.tvDailyWeight.text = "${todayWeightData!!.weight}kg"
+        binding.tvDailyDiff.text = String.format("%.1f", dailyDiff)
 
+        if(dailyDiff < 0.0){
+            binding.ivDailyDiff.setImageResource(R.drawable.ic_diff_arrow_down)
+        }else if(dailyDiff == 0.0){
+            binding.ivDailyDiff.setImageResource(R.drawable.ic_diff_arrow_equal)
+        }else{
+            binding.ivDailyDiff.setImageResource(R.drawable.ic_diff_arrow_up)
+        }
     }
 
     fun initNavi(){

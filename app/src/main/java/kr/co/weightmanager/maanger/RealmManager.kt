@@ -42,6 +42,34 @@ object RealmManager {
         Realm.getDefaultInstance().commitTransaction()
     }
 
+    fun getTodayWeightData(): RmWeightData{
+        var weightData = Realm.getDefaultInstance().where(RmWeightData::class.java)
+            .sort("dateTime", Sort.DESCENDING)
+            .findFirst()
+
+        return weightData!!
+    }
+
+    fun getYesterdayWeightData(): RmWeightData{
+        var weightList = Realm.getDefaultInstance().where(RmWeightData::class.java)
+            .sort("dateTime", Sort.DESCENDING)
+            .findAll()
+
+        return weightList[1]!!
+    }
+
+    fun getDailyDiff(): Double{
+        var todayData = getTodayWeightData()
+        var yesterdayData = getYesterdayWeightData()
+
+        var todayWeight = todayData.weight.toDouble()
+        var yesterdayWeight = yesterdayData.weight.toDouble()
+
+        var diff = todayWeight - yesterdayWeight
+
+        return diff
+    }
+
     fun deleteAll(){
         Realm.getDefaultInstance().beginTransaction()
             Realm.getDefaultInstance().delete(RmWeightData::class.java)
