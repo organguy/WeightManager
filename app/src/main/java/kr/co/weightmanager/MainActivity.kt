@@ -1,10 +1,14 @@
 package kr.co.weightmanager
 
 import android.annotation.SuppressLint
+import android.net.Uri
 import android.os.Bundle
 import android.view.MenuItem
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
+import com.bumptech.glide.Glide
 import com.github.mikephil.charting.components.AxisBase
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.BarData
@@ -12,6 +16,8 @@ import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
+import com.google.firebase.auth.FirebaseAuth
+import com.google.rpc.context.AttributeContext
 import io.realm.RealmList
 import kr.co.weightmanager.databinding.ActivityMainBinding
 import kr.co.weightmanager.maanger.RealmManager
@@ -57,14 +63,35 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun initNavi(){
+    private fun initNavi(){
         setSupportActionBar(binding.tbToolbar)
 
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         supportActionBar!!.setHomeAsUpIndicator(R.drawable.ic_baseline_dehaze_24)
+
+        initProfile()
     }
 
-    fun initChart(){
+    private fun initProfile(){
+
+        val navView = binding.nvNavigation
+        val headerView = navView.getHeaderView(0)
+
+        val ivNavProfile = headerView.findViewById<ImageView>(R.id.iv_nav_profile)
+        val tvNavProfile = headerView.findViewById<TextView>(R.id.tv_nav_profile)
+        val tvNavInfo = headerView.findViewById<TextView>(R.id.tv_nav_info)
+        var authUser = FirebaseAuth.getInstance().currentUser
+
+        if (authUser!!.photoUrl != null) {
+            Glide.with(this)
+                .load(authUser!!.photoUrl)
+                .into(ivNavProfile)
+        }
+        tvNavProfile.text = authUser.displayName
+        tvNavInfo.text = authUser.email
+    }
+
+    private fun initChart(){
 
         binding.bcChart.run {
             axisRight.isEnabled = false
