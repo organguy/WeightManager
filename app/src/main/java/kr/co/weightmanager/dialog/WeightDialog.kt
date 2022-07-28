@@ -11,15 +11,11 @@ import kr.co.weightmanager.R
 import kr.co.weightmanager.databinding.DialogWeightBinding
 import kr.co.weightmanager.interfaces.InsertWeightListener
 
-class WeightDialog() : DialogFragment() {
+class WeightDialog : DialogFragment() {
 
     var mListener: InsertWeightListener? = null
 
     lateinit var binding : DialogWeightBinding
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
