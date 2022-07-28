@@ -16,6 +16,7 @@ import io.realm.RealmList
 import kr.co.weightmanager.databinding.ActivityMainBinding
 import kr.co.weightmanager.maanger.RealmManager
 import kr.co.weightmanager.realm.RmWeightData
+import kr.co.weightmanager.util.OgLog
 
 class MainActivity : AppCompatActivity() {
 
@@ -71,6 +72,8 @@ class MainActivity : AppCompatActivity() {
             axisLeft.run {
                 setDrawLabels(true)
                 setDrawGridLines(false)
+                axisMaximum = 90.0f
+                axisMinimum = 75.0f
             }
 
             xAxis.run {
@@ -85,12 +88,33 @@ class MainActivity : AppCompatActivity() {
 
 
         var dataVals = ArrayList<BarEntry>()
+        var colors = IntArray(weightList.size)
+
+        var maxWeight = RealmManager.getMaxWeight()
+        var minWeight = RealmManager.getMinWeight()
+
+        OgLog.d("maxWeight : " + maxWeight!!.toDouble())
+        OgLog.d("minWeight : " + minWeight!!.toDouble())
 
         for(i: Int in 0 until weightList.size){
             dataVals.add(BarEntry(i.toFloat(), weightList[i]!!.weight.toFloat()))
+
+            when (weightList[i]!!.weight) {
+                maxWeight -> {
+                    colors[i] = R.color.chart_max
+                }
+                minWeight -> {
+                    colors[i] = R.color.chart_min
+                }
+                else -> {
+                    colors[i] = R.color.chart_normal
+                }
+            }
         }
 
         var barDataSet = BarDataSet(dataVals, "전체 현황")
+        barDataSet.setColors(colors, this)
+
         var dataSets = ArrayList<IBarDataSet>()
         dataSets.add(barDataSet)
 

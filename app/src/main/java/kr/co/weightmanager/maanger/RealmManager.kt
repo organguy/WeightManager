@@ -70,6 +70,22 @@ object RealmManager {
         return diff
     }
 
+    fun getMaxWeight(): String{
+        var weightData = Realm.getDefaultInstance().where(RmWeightData::class.java)
+            .sort("weight", Sort.DESCENDING)
+            .findFirst()
+
+        return weightData!!.weight
+    }
+
+    fun getMinWeight(): String{
+        var weightData = Realm.getDefaultInstance().where(RmWeightData::class.java)
+            .sort("weight", Sort.ASCENDING)
+            .findFirst()
+
+        return weightData!!.weight
+    }
+
     fun deleteAll(){
         Realm.getDefaultInstance().beginTransaction()
             Realm.getDefaultInstance().delete(RmWeightData::class.java)
