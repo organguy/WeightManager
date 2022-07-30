@@ -1,11 +1,13 @@
 package kr.co.weightmanager
 
+
 import android.annotation.SuppressLint
-import android.net.Uri
 import android.os.Bundle
+import android.view.Menu
 import android.view.MenuItem
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import com.bumptech.glide.Glide
@@ -16,13 +18,14 @@ import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
+import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
-import com.google.rpc.context.AttributeContext
 import io.realm.RealmList
 import kr.co.weightmanager.databinding.ActivityMainBinding
 import kr.co.weightmanager.maanger.RealmManager
 import kr.co.weightmanager.realm.RmWeightData
 import kr.co.weightmanager.util.OgLog
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -89,6 +92,19 @@ class MainActivity : AppCompatActivity() {
         }
         tvNavProfile.text = authUser.displayName
         tvNavInfo.text = authUser.email
+
+        navView.setNavigationItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.item_goal -> showGoalSettingDialog()
+
+                R.id.item_alarm -> showAlarmSettingDialog()
+
+                R.id.item_logout -> doLogout()
+
+            }
+
+            true
+        }
     }
 
     private fun initChart(){
@@ -163,6 +179,18 @@ class MainActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
+    fun showGoalSettingDialog(){
+        Toast.makeText(this, "showGoalSettingDialog", Toast.LENGTH_SHORT).show()
+    }
+
+    fun showAlarmSettingDialog(){
+        Toast.makeText(this, "showAlarmSettingDialog", Toast.LENGTH_SHORT).show()
+    }
+
+    fun doLogout(){
+        Toast.makeText(this, "doLogout", Toast.LENGTH_SHORT).show()
+    }
+
     override fun onBackPressed() {
 
         if(binding.dlDrawer.isDrawerOpen(GravityCompat.START)){
@@ -181,4 +209,8 @@ class MainActivity : AppCompatActivity() {
             return date
         }
     }
+}
+
+private fun NavigationView.setNavigationItemSelectedListener(function: (item: MenuItem) -> Unit) {
+
 }
