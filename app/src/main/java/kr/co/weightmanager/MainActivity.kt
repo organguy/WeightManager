@@ -3,7 +3,7 @@ package kr.co.weightmanager
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.view.Menu
+import android.text.TextUtils
 import android.view.MenuItem
 import android.widget.ImageView
 import android.widget.TextView
@@ -22,6 +22,9 @@ import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import io.realm.RealmList
 import kr.co.weightmanager.databinding.ActivityMainBinding
+import kr.co.weightmanager.dialog.GoalDialog
+import kr.co.weightmanager.interfaces.InsertGoalListener
+import kr.co.weightmanager.maanger.PropertyManager
 import kr.co.weightmanager.maanger.RealmManager
 import kr.co.weightmanager.realm.RmWeightData
 import kr.co.weightmanager.util.OgLog
@@ -33,6 +36,8 @@ class MainActivity : AppCompatActivity() {
     var  weightList = RealmList<RmWeightData>()
     private lateinit var todayWeightData: RmWeightData
     private var dailyDiff = 0.0
+
+    lateinit var menuItemGoal:MenuItem
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -79,6 +84,9 @@ class MainActivity : AppCompatActivity() {
 
         val navView = binding.nvNavigation
         val headerView = navView.getHeaderView(0)
+        val navMenu = navView.menu
+
+
 
         val ivNavProfile = headerView.findViewById<ImageView>(R.id.iv_nav_profile)
         val tvNavProfile = headerView.findViewById<TextView>(R.id.tv_nav_profile)
@@ -104,6 +112,15 @@ class MainActivity : AppCompatActivity() {
             }
 
             true
+        }
+
+        menuItemGoal = navMenu.findItem(R.id.item_goal)
+        var goal = PropertyManager.getGoal()
+
+        if(!TextUtils.isEmpty(goal)){
+            menuItemGoal.title = "${getString(R.string.menu_item_goal)}     -      ${goal}kg"
+        }else{
+            menuItemGoal.title = getString(R.string.menu_item_goal)
         }
     }
 
@@ -179,8 +196,26 @@ class MainActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    fun showGoalSettingDialog(){
-        Toast.makeText(this, "showGoalSettingDialog", Toast.LENGTH_SHORT).show()
+    private fun showGoalSettingDialog(){
+        val goalDialog = GoalDialog()
+        goalDialog.isCancelable = false
+        goalDialog.setOnGoalListener(object : InsertGoalListener {
+            override fun onResult(weight: String) {
+                updateGoal(weight)
+            }
+        })
+        goalDialog.show(supportFragmentManager, "dialog")
+    }
+
+    fun updateGoal(weight: String){
+        PropertyManager.setGoal(weight)
+        var goal = PropertyManager.getGoal()
+
+        if(!TextUtils.isEmpty(goal)){
+            menuItemGoal.title = "${getString(R.string.menu_item_goal)} - $goal"
+        }else{
+            menuItemGoal.title = getString(R.string.menu_item_goal)
+        }
     }
 
     fun showAlarmSettingDialog(){
@@ -209,8 +244,4 @@ class MainActivity : AppCompatActivity() {
             return date
         }
     }
-}
-
-private fun NavigationView.setNavigationItemSelectedListener(function: (item: MenuItem) -> Unit) {
-
 }

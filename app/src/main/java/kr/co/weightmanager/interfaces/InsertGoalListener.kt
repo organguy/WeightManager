@@ -1,5 +1,5 @@
 package kr.co.weightmanager.interfaces
 
-interface InsertWeightListener {
+interface InsertGoalListener {
     fun onResult(weight: String)
 }

@@ -19,7 +19,7 @@ import com.google.firebase.auth.GoogleAuthProvider
 import kr.co.weightmanager.data.WeightData
 import kr.co.weightmanager.databinding.ActivityIntroBinding
 import kr.co.weightmanager.dialog.WeightDialog
-import kr.co.weightmanager.interfaces.InsertWeightListener
+import kr.co.weightmanager.interfaces.InsertGoalListener
 import kr.co.weightmanager.interfaces.OnResultListener
 import kr.co.weightmanager.maanger.FirestoreManager
 import kr.co.weightmanager.maanger.RealmManager
@@ -150,7 +150,7 @@ class IntroActivity : AppCompatActivity() {
     private fun showWeightDialog(){
         val weightDialog = WeightDialog()
         weightDialog.isCancelable = false
-        weightDialog.setOnInsertWeightListener(object : InsertWeightListener {
+        weightDialog.setOnInsertWeightListener(object : InsertGoalListener {
             override fun onResult(weight: String) {
                 insertTodayWeight(weight)
             }

@@ -8,14 +8,14 @@ import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import kr.co.weightmanager.R
-import kr.co.weightmanager.databinding.DialogWeightBinding
+import kr.co.weightmanager.databinding.DialogGoalBinding
 import kr.co.weightmanager.interfaces.InsertGoalListener
 
-class WeightDialog : DialogFragment() {
+class GoalDialog : DialogFragment() {
 
     var mListener: InsertGoalListener? = null
 
-    lateinit var binding : DialogWeightBinding
+    lateinit var binding : DialogGoalBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -31,7 +31,7 @@ class WeightDialog : DialogFragment() {
             dialog!!.setCancelable(false)
         }
 
-        binding = DialogWeightBinding.inflate(inflater, container, false)
+        binding = DialogGoalBinding.inflate(inflater, container, false)
 
         binding.btOk.setOnClickListener {
             insertWeight()
@@ -44,7 +44,7 @@ class WeightDialog : DialogFragment() {
         return binding.root
     }
 
-    fun setOnInsertWeightListener(listener: InsertGoalListener){
+    fun setOnGoalListener(listener: InsertGoalListener){
         mListener = listener
     }
 
