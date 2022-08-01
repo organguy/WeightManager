@@ -22,8 +22,10 @@ import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import io.realm.RealmList
 import kr.co.weightmanager.databinding.ActivityMainBinding
+import kr.co.weightmanager.dialog.AlarmDialog
 import kr.co.weightmanager.dialog.GoalDialog
 import kr.co.weightmanager.interfaces.InsertGoalListener
+import kr.co.weightmanager.interfaces.SetAlarmListener
 import kr.co.weightmanager.maanger.PropertyManager
 import kr.co.weightmanager.maanger.RealmManager
 import kr.co.weightmanager.realm.RmWeightData
@@ -37,7 +39,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var todayWeightData: RmWeightData
     private var dailyDiff = 0.0
 
-    lateinit var menuItemGoal:MenuItem
+    lateinit var menuItemGoal: MenuItem
+    lateinit var menuItemAlarm: MenuItem
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -86,8 +89,6 @@ class MainActivity : AppCompatActivity() {
         val headerView = navView.getHeaderView(0)
         val navMenu = navView.menu
 
-
-
         val ivNavProfile = headerView.findViewById<ImageView>(R.id.iv_nav_profile)
         val tvNavProfile = headerView.findViewById<TextView>(R.id.tv_nav_profile)
         val tvNavInfo = headerView.findViewById<TextView>(R.id.tv_nav_info)
@@ -121,6 +122,19 @@ class MainActivity : AppCompatActivity() {
             menuItemGoal.title = "${getString(R.string.menu_item_goal)}     -      ${goal}kg"
         }else{
             menuItemGoal.title = getString(R.string.menu_item_goal)
+        }
+
+        menuItemAlarm = navMenu.findItem(R.id.item_alarm)
+        var alarmTime = PropertyManager.getAlarm()
+
+        if(!TextUtils.isEmpty(alarmTime)){
+
+            var hour = alarmTime!!.split(",")[0]
+            var min = alarmTime!!.split(",")[1]
+
+            menuItemAlarm.title = "${getString(R.string.menu_item_alram)}     -     $hour 시 $min 분"
+        }else{
+            menuItemAlarm.title = getString(R.string.menu_item_alram)
         }
     }
 
@@ -218,8 +232,20 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun showAlarmSettingDialog(){
-        Toast.makeText(this, "showAlarmSettingDialog", Toast.LENGTH_SHORT).show()
+    private fun showAlarmSettingDialog(){
+        val alarmDialog = AlarmDialog()
+        alarmDialog.isCancelable = false
+        alarmDialog.setOnAlarmListener(object : SetAlarmListener {
+            override fun onResult(hour: Int, min: Int) {
+                updateAlarm(hour, min)
+            }
+        })
+        alarmDialog.show(supportFragmentManager, "dialog")
+    }
+
+    fun updateAlarm(hour: Int, min: Int){
+        var alarmTime = "$hour,$min"
+        PropertyManager.setAlarm(alarmTime)
     }
 
     fun doLogout(){

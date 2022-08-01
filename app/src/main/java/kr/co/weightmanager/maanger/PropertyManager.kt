@@ -25,4 +25,20 @@ object PropertyManager {
         mEditor.putString(GOAL, _goal)
         mEditor.commit()
     }
+
+    /**
+     * 설정 ---> 알람 시간 (hour,min)
+     */
+    private const val ALARM = "ALARM"
+    private var alarm: String? = null
+
+    fun getAlarm(): String? {
+        alarm = mPrefs.getString(ALARM, "")
+        return alarm
+    }
+
+    fun setAlarm(_alarm: String?) {
+        mEditor.putString(ALARM, _alarm)
+        mEditor.commit()
+    }
 }

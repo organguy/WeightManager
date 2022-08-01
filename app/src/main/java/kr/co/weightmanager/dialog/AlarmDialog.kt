@@ -5,18 +5,16 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.*
-import android.widget.Toast
 import androidx.fragment.app.DialogFragment
-import kr.co.weightmanager.R
-import kr.co.weightmanager.databinding.DialogGoalBinding
-import kr.co.weightmanager.interfaces.InsertGoalListener
+import kr.co.weightmanager.databinding.DialogAlarmBinding
+import kr.co.weightmanager.interfaces.SetAlarmListener
 import kr.co.weightmanager.maanger.PropertyManager
 
-class GoalDialog : DialogFragment() {
+class AlarmDialog : DialogFragment() {
 
-    var mListener: InsertGoalListener? = null
+    var mListener: SetAlarmListener? = null
 
-    lateinit var binding : DialogGoalBinding
+    lateinit var binding : DialogAlarmBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,37 +30,39 @@ class GoalDialog : DialogFragment() {
             dialog!!.setCancelable(false)
         }
 
-        binding = DialogGoalBinding.inflate(inflater, container, false)
+        binding = DialogAlarmBinding.inflate(inflater, container, false)
 
         binding.btOk.setOnClickListener {
-            insertWeight()
+            setAlarm()
         }
 
         binding.btCancel.setOnClickListener {
             dismiss()
         }
 
-        if(!TextUtils.isEmpty(PropertyManager.getGoal())){
-            binding.etWeight.setText(PropertyManager.getGoal())
+        if(!TextUtils.isEmpty(PropertyManager.getAlarm())){
+
+            var alarmTime = PropertyManager.getAlarm()
+            var hour = alarmTime!!.split(",")[0]
+            var min = alarmTime!!.split(",")[1]
+
+            binding.tpAlarm.hour = hour.toInt()
+            binding.tpAlarm.minute = min.toInt()
         }
 
         return binding.root
     }
 
-    fun setOnGoalListener(listener: InsertGoalListener){
+    fun setOnAlarmListener(listener: SetAlarmListener){
         mListener = listener
     }
 
-    fun insertWeight(){
-
-        if(!TextUtils.isEmpty(binding.etWeight.text)){
-            if(mListener != null){
-                var weight = binding.etWeight.text.toString()
-                mListener!!.onResult(weight)
-                dismiss()
-            }
-        }else{
-            Toast.makeText(context, R.string.msg_write_weight, Toast.LENGTH_SHORT).show()
+    fun setAlarm(){
+        if(mListener != null){
+            var hour = binding.tpAlarm.hour
+            var min = binding.tpAlarm.minute
+            mListener!!.onResult(hour, min)
+            dismiss()
         }
     }
 }
