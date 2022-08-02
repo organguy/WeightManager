@@ -41,6 +41,7 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var menuItemGoal: MenuItem
     lateinit var menuItemAlarm: MenuItem
+    lateinit var menuItemVersion: MenuItem
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -136,6 +137,9 @@ class MainActivity : AppCompatActivity() {
         }else{
             menuItemAlarm.title = getString(R.string.menu_item_alram)
         }
+
+        menuItemVersion = navMenu.findItem(R.id.item_version)
+        menuItemVersion.title = "${getString(R.string.menu_item_version)}     -     ${BuildConfig.VERSION_NAME}"
     }
 
     private fun initChart(){
