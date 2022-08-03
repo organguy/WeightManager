@@ -41,4 +41,20 @@ object PropertyManager {
         mEditor.putString(ALARM, _alarm)
         mEditor.commit()
     }
+
+    /**
+     * 설정 ---> 마켓 버전
+     */
+    private const val VERSION = "VERSION"
+    private var version: String? = null
+
+    fun getVersion(): String? {
+        version = mPrefs.getString(VERSION, "")
+        return version
+    }
+
+    fun setVersion(_version: String?) {
+        mEditor.putString(VERSION, _version)
+        mEditor.commit()
+    }
 }

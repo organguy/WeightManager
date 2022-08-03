@@ -66,4 +66,26 @@ object FirestoreManager {
             }
     }
 
+    fun getAppVersion(resultListener: OnResultListener<String>){
+        FirebaseFirestore.getInstance().collection("settings")
+            .document("EYZ2sXIPAHTlF7US9xou")
+            .get()
+            .addOnCompleteListener { it ->
+                try{
+                    var version = it.result["version"] as String
+                    resultListener.onSuccess(version)
+                }catch (e: FirebaseFirestoreException) {
+                    OgLog.d(e.localizedMessage)
+                    resultListener.onFail()
+                }
+            }
+            .addOnFailureListener {
+                resultListener.onFail()
+            }
+            .addOnCanceledListener {
+                resultListener.onFail()
+            }
+
+    }
+
 }

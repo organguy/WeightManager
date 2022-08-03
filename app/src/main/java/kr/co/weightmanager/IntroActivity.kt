@@ -22,6 +22,7 @@ import kr.co.weightmanager.dialog.WeightDialog
 import kr.co.weightmanager.interfaces.InsertGoalListener
 import kr.co.weightmanager.interfaces.OnResultListener
 import kr.co.weightmanager.maanger.FirestoreManager
+import kr.co.weightmanager.maanger.PropertyManager
 import kr.co.weightmanager.maanger.RealmManager
 import kr.co.weightmanager.realm.RmWeightData
 import kr.co.weightmanager.util.OgLog
@@ -70,7 +71,8 @@ class IntroActivity : AppCompatActivity() {
             initGoogleLogin()
         }else{
             OgLog.d(auth.currentUser!!.uid)
-            checkWeightData()
+            //checkWeightData()
+            checkVersion()
         }
     }
 
@@ -105,9 +107,26 @@ class IntroActivity : AppCompatActivity() {
                 OnCompleteListener { task ->
                     if (task.isSuccessful) {
                         // 인증에 성공한 후, 현재 로그인된 유저의 정보를 가져올 수 있습니다.
-                        checkWeightData()
+                        //checkWeightData()
+                        checkVersion()
                     }
                 })
+    }
+
+    private fun checkVersion(){
+        FirestoreManager.getAppVersion(object : OnResultListener<String> {
+            override fun onSuccess(version: String) {
+                OgLog.d("version : $version")
+                PropertyManager.setVersion(version)
+
+                checkWeightData()
+            }
+
+            override fun onFail() {
+                OgLog.d("version : fail")
+                checkWeightData()
+            }
+        })
     }
 
     private fun checkWeightData(){
