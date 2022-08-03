@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
         android:id="@+id/item_goal"
@@ -9,7 +10,9 @@
         android:title="@string/menu_item_alram" />
     <item
         android:id="@+id/item_version"
-        android:title="@string/menu_item_version" />
+        android:title="@string/menu_item_version"
+        app:actionViewClass="android.widget.TextView"
+        />
     <item
         android:id="@+id/item_logout"
         android:title="@string/menu_item_logout" />

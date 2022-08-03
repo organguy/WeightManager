@@ -2,14 +2,17 @@ package kr.co.weightmanager
 
 
 import android.annotation.SuppressLint
+import android.graphics.Typeface
 import android.os.Bundle
 import android.text.TextUtils
+import android.view.Gravity
 import android.view.MenuItem
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
+import androidx.core.view.MenuItemCompat
 import com.bumptech.glide.Glide
 import com.github.mikephil.charting.components.AxisBase
 import com.github.mikephil.charting.components.XAxis
@@ -140,6 +143,12 @@ class MainActivity : AppCompatActivity() {
 
         menuItemVersion = navMenu.findItem(R.id.item_version)
         menuItemVersion.title = "${getString(R.string.menu_item_version)}     -     ${BuildConfig.VERSION_NAME}"
+
+        var badgeVersion = menuItemVersion.actionView as TextView
+        badgeVersion.gravity = Gravity.CENTER_VERTICAL
+        badgeVersion.setTypeface(null, Typeface.BOLD)
+        badgeVersion.setTextColor(getColor(android.R.color.holo_red_dark))
+        badgeVersion.setText(R.string.new_version)
     }
 
     private fun initChart(){

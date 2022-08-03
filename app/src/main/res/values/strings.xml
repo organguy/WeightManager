@@ -16,4 +16,5 @@
     <string name="menu_item_logout">Logout</string>
     <string name="msg_write_goal">목표 체중을 입력해 주세요.</string>
     <string name="msg_set_alarm">알람 시간을 설정해 주세요.</string>
+    <string name="new_version">NEW</string>
 </resources>
