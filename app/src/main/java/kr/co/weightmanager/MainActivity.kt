@@ -7,12 +7,12 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.view.Gravity
 import android.view.MenuItem
+import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
-import androidx.core.view.MenuItemCompat
 import com.bumptech.glide.Glide
 import com.github.mikephil.charting.components.AxisBase
 import com.github.mikephil.charting.components.XAxis
@@ -21,7 +21,6 @@ import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
-import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import io.realm.RealmList
 import kr.co.weightmanager.databinding.ActivityMainBinding
@@ -33,6 +32,7 @@ import kr.co.weightmanager.maanger.PropertyManager
 import kr.co.weightmanager.maanger.RealmManager
 import kr.co.weightmanager.realm.RmWeightData
 import kr.co.weightmanager.util.OgLog
+import kr.co.weightmanager.util.VersionCheck
 
 
 class MainActivity : AppCompatActivity() {
@@ -49,7 +49,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityMainBinding.inflate(layoutInflater);
+        binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         initData()
@@ -66,7 +66,7 @@ class MainActivity : AppCompatActivity() {
 
     @SuppressLint("SetTextI18n")
     fun initView(){
-        binding.tvDailyWeight.text = "${todayWeightData!!.weight}kg"
+        binding.tvDailyWeight.text = "${todayWeightData.weight}kg"
         binding.tvDailyDiff.text = String.format("%.1f", dailyDiff)
 
         if(dailyDiff < 0.0){
@@ -85,13 +85,13 @@ class MainActivity : AppCompatActivity() {
         supportActionBar!!.setHomeAsUpIndicator(R.drawable.ic_baseline_dehaze_24)
 
         initProfile()
+        initNavItem()
     }
 
     private fun initProfile(){
 
         val navView = binding.nvNavigation
         val headerView = navView.getHeaderView(0)
-        val navMenu = navView.menu
 
         val ivNavProfile = headerView.findViewById<ImageView>(R.id.iv_nav_profile)
         val tvNavProfile = headerView.findViewById<TextView>(R.id.tv_nav_profile)
@@ -100,11 +100,17 @@ class MainActivity : AppCompatActivity() {
 
         if (authUser!!.photoUrl != null) {
             Glide.with(this)
-                .load(authUser!!.photoUrl)
+                .load(authUser.photoUrl)
                 .into(ivNavProfile)
         }
         tvNavProfile.text = authUser.displayName
         tvNavInfo.text = authUser.email
+    }
+
+    private fun initNavItem(){
+
+        val navView = binding.nvNavigation
+        val navMenu = navView.menu
 
         navView.setNavigationItemSelectedListener { item ->
             when (item.itemId) {
@@ -120,6 +126,15 @@ class MainActivity : AppCompatActivity() {
         }
 
         menuItemGoal = navMenu.findItem(R.id.item_goal)
+        menuItemAlarm = navMenu.findItem(R.id.item_alarm)
+        menuItemVersion = navMenu.findItem(R.id.item_version)
+
+        initNavItemGoal()
+        initNavItemAlarm()
+        iniNavItemVersion()
+    }
+
+    private fun initNavItemGoal(){
         var goal = PropertyManager.getGoal()
 
         if(!TextUtils.isEmpty(goal)){
@@ -127,21 +142,23 @@ class MainActivity : AppCompatActivity() {
         }else{
             menuItemGoal.title = getString(R.string.menu_item_goal)
         }
+    }
 
-        menuItemAlarm = navMenu.findItem(R.id.item_alarm)
+    private fun initNavItemAlarm(){
         var alarmTime = PropertyManager.getAlarm()
 
         if(!TextUtils.isEmpty(alarmTime)){
 
             var hour = alarmTime!!.split(",")[0]
-            var min = alarmTime!!.split(",")[1]
+            var min = alarmTime.split(",")[1]
 
             menuItemAlarm.title = "${getString(R.string.menu_item_alram)}     -     $hour 시 $min 분"
         }else{
             menuItemAlarm.title = getString(R.string.menu_item_alram)
         }
+    }
 
-        menuItemVersion = navMenu.findItem(R.id.item_version)
+    private fun iniNavItemVersion(){
         menuItemVersion.title = "${getString(R.string.menu_item_version)}     -     ${BuildConfig.VERSION_NAME}"
 
         var badgeVersion = menuItemVersion.actionView as TextView
@@ -149,6 +166,16 @@ class MainActivity : AppCompatActivity() {
         badgeVersion.setTypeface(null, Typeface.BOLD)
         badgeVersion.setTextColor(getColor(android.R.color.holo_red_dark))
         badgeVersion.setText(R.string.new_version)
+
+        val currentVersion = VersionCheck(BuildConfig.VERSION_NAME)
+        val marketVersion = VersionCheck(PropertyManager.getVersion()!!)
+        val compare: Int = marketVersion.compareTo(currentVersion)
+
+        if (compare == 1) { // marketVersion > currentVersion
+            badgeVersion.visibility = View.VISIBLE
+        } else { // currentVersion = marketVersion
+            badgeVersion.visibility = View.GONE
+        }
     }
 
     private fun initChart(){
@@ -180,8 +207,8 @@ class MainActivity : AppCompatActivity() {
         var maxWeight = RealmManager.getMaxWeight()
         var minWeight = RealmManager.getMinWeight()
 
-        OgLog.d("maxWeight : " + maxWeight!!.toDouble())
-        OgLog.d("minWeight : " + minWeight!!.toDouble())
+        OgLog.d("maxWeight : " + maxWeight.toDouble())
+        OgLog.d("minWeight : " + minWeight.toDouble())
 
         for(i: Int in 0 until weightList.size){
             dataVals.add(BarEntry(i.toFloat(), weightList[i]!!.weight.toFloat()))
@@ -277,7 +304,7 @@ class MainActivity : AppCompatActivity() {
     inner class MyXAxisFormatter : ValueFormatter() {
         override fun getAxisLabel(value: Float, axis: AxisBase?): String {
 
-            var dateTime = weightList[value.toInt()]!!.dateTime;
+            var dateTime = weightList[value.toInt()]!!.dateTime
             var date = dateTime!!.substring(5, dateTime.length)
 
             return date

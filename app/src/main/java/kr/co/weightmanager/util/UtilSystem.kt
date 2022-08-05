@@ -9,5 +9,7 @@ class UtilSystem {
             val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
             return connectivityManager.isDefaultNetworkActive
         }
+
+
     }
 }
