@@ -2,6 +2,7 @@ package kr.co.weightmanager
 
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
 import android.text.TextUtils
@@ -21,12 +22,19 @@ import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
+import com.google.android.gms.auth.api.Auth
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.GoogleApi
+import com.google.android.gms.common.api.GoogleApiClient
 import com.google.firebase.auth.FirebaseAuth
 import io.realm.RealmList
 import kr.co.weightmanager.databinding.ActivityMainBinding
 import kr.co.weightmanager.dialog.AlarmDialog
 import kr.co.weightmanager.dialog.GoalDialog
+import kr.co.weightmanager.dialog.LogoutDialog
 import kr.co.weightmanager.interfaces.InsertGoalListener
+import kr.co.weightmanager.interfaces.OnLogoutListener
 import kr.co.weightmanager.interfaces.SetAlarmListener
 import kr.co.weightmanager.maanger.PropertyManager
 import kr.co.weightmanager.maanger.RealmManager
@@ -118,7 +126,7 @@ class MainActivity : AppCompatActivity() {
 
                 R.id.item_alarm -> showAlarmSettingDialog()
 
-                R.id.item_logout -> doLogout()
+                R.id.item_logout -> showLogoutDialog()
 
             }
 
@@ -288,8 +296,30 @@ class MainActivity : AppCompatActivity() {
         PropertyManager.setAlarm(alarmTime)
     }
 
+    private fun showLogoutDialog(){
+        val logoutDialog = LogoutDialog()
+        logoutDialog.isCancelable = false
+        logoutDialog.setOnLogoutListener(object : OnLogoutListener{
+            override fun onResult() {
+                doLogout()
+            }
+        })
+        logoutDialog.show(supportFragmentManager, "dialog")
+    }
+
     fun doLogout(){
-        Toast.makeText(this, "doLogout", Toast.LENGTH_SHORT).show()
+
+        FirebaseAuth.getInstance().signOut()
+
+        val opt = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).build()
+        val client = GoogleSignIn.getClient(this, opt)
+        client.signOut().addOnCompleteListener {
+            val intent = Intent(this, IntroActivity::class.java)
+            startActivity(intent)
+            finish()
+        }.addOnFailureListener {
+            Toast.makeText(this, R.string.msg_re_logout, Toast.LENGTH_SHORT).show()
+        }
     }
 
     override fun onBackPressed() {
