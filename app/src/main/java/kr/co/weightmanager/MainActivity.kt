@@ -22,11 +22,8 @@ import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
-import com.google.android.gms.auth.api.Auth
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.android.gms.common.api.GoogleApi
-import com.google.android.gms.common.api.GoogleApiClient
 import com.google.firebase.auth.FirebaseAuth
 import io.realm.RealmList
 import kr.co.weightmanager.databinding.ActivityMainBinding
@@ -39,8 +36,8 @@ import kr.co.weightmanager.interfaces.SetAlarmListener
 import kr.co.weightmanager.maanger.PropertyManager
 import kr.co.weightmanager.maanger.RealmManager
 import kr.co.weightmanager.realm.RmWeightData
-import kr.co.weightmanager.util.OgLog
 import kr.co.weightmanager.util.VersionCheck
+import kotlin.math.min
 
 
 class MainActivity : AppCompatActivity() {
@@ -188,6 +185,13 @@ class MainActivity : AppCompatActivity() {
 
     private fun initChart(){
 
+        var goalWeight = PropertyManager.getGoal()
+        var maxWeight = RealmManager.getMaxWeight()
+        var minWeight = RealmManager.getMinWeight()
+
+        var axisMinWeight = min(goalWeight!!.toDouble(), minWeight.toDouble()).toInt()
+        axisMinWeight = (axisMinWeight / 5) * 5
+
         binding.bcChart.run {
             axisRight.isEnabled = false
 
@@ -195,7 +199,7 @@ class MainActivity : AppCompatActivity() {
                 setDrawLabels(true)
                 setDrawGridLines(false)
                 axisMaximum = 90.0f
-                axisMinimum = 75.0f
+                axisMinimum = axisMinWeight.toFloat()
             }
 
             xAxis.run {
@@ -212,11 +216,7 @@ class MainActivity : AppCompatActivity() {
         var dataVals = ArrayList<BarEntry>()
         var colors = IntArray(weightList.size)
 
-        var maxWeight = RealmManager.getMaxWeight()
-        var minWeight = RealmManager.getMinWeight()
 
-        OgLog.d("maxWeight : " + maxWeight.toDouble())
-        OgLog.d("minWeight : " + minWeight.toDouble())
 
         for(i: Int in 0 until weightList.size){
             dataVals.add(BarEntry(i.toFloat(), weightList[i]!!.weight.toFloat()))
