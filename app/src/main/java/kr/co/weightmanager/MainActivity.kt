@@ -189,8 +189,18 @@ class MainActivity : AppCompatActivity() {
         var maxWeight = RealmManager.getMaxWeight()
         var minWeight = RealmManager.getMinWeight()
 
-        var axisMinWeight = min(goalWeight!!.toDouble(), minWeight.toDouble()).toInt()
+        var axisMinWeight = if(!TextUtils.isEmpty(goalWeight)){
+            min(goalWeight!!.toDouble(), minWeight.toDouble()).toInt()
+        }else{
+            minWeight.toDouble().toInt()
+        }
+
         axisMinWeight = (axisMinWeight / 5) * 5
+
+        var axisMaxWeight = maxWeight.toDouble().toInt()
+        if(axisMaxWeight % 5 != 0){
+            axisMaxWeight = ((axisMaxWeight / 5) + 1) * 5
+        }
 
         binding.bcChart.run {
             axisRight.isEnabled = false
@@ -198,7 +208,7 @@ class MainActivity : AppCompatActivity() {
             axisLeft.run {
                 setDrawLabels(true)
                 setDrawGridLines(false)
-                axisMaximum = 90.0f
+                axisMaximum = axisMaxWeight.toFloat()
                 axisMinimum = axisMinWeight.toFloat()
             }
 
