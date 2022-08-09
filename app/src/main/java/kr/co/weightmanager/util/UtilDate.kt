@@ -8,7 +8,7 @@ class UtilDate {
     companion object{
         fun getDate(year: Int, month: Int, date: Int): Date? {
             val cal = Calendar.getInstance()
-            cal.set(year, month-1, date)
+            cal.set(year, month-1, date, 0, 0, 0)
             return Date(cal.timeInMillis)
         }
 
@@ -17,8 +17,8 @@ class UtilDate {
         fun getCurrentDate(): Date? {
             val cal = Calendar.getInstance()
             val year = cal.get(Calendar.YEAR)
-            val month = cal.get(Calendar.MONTH)
-            val date = cal.get(Calendar.DAY_OF_MONTH)
+            val month = cal.get(Calendar.MONTH) + 1
+            val date = cal.get(Calendar.DATE)
 
             val currentDate = getDate(year, month, date)
 

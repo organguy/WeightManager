@@ -21,7 +21,7 @@ object RealmManager {
 
     fun isTodayDataExist() : Boolean{
 
-        var todayDate = Date()
+        var todayDate = UtilDate.getCurrentDate()
 
         var weightData = Realm.getDefaultInstance().where(RmWeightData::class.java)
             .equalTo("dateTime", todayDate)

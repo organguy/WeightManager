@@ -143,8 +143,6 @@ class IntroActivity : AppCompatActivity() {
         if (dateTime != null) {
             updateWeightData(dateTime)
         }
-
-
     }
 
     private fun updateWeightData(dateTime: Date){
@@ -152,6 +150,7 @@ class IntroActivity : AppCompatActivity() {
             override fun onSuccess(result: ArrayList<WeightData>) {
                 for(data in result){
                     var weightData = RmWeightData()
+                    weightData.pk = data.pk
                     weightData.weight = data.weight
                     weightData.dateTime = data.dateTime
                     weightData.uid = data.uid
@@ -159,15 +158,15 @@ class IntroActivity : AppCompatActivity() {
                     RealmManager.insertWeightData(weightData)
                 }
 
-               /* if(RealmManager.isTodayDataExist()){
+                if(RealmManager.isTodayDataExist()){
                     gotoMain()
                 }else{
                     showWeightDialog()
-                }*/
+                }
             }
 
             override fun onFail() {
-                //gotoMain()
+                gotoMain()
             }
         })
     }
@@ -209,8 +208,10 @@ class IntroActivity : AppCompatActivity() {
 
     private fun gotoMain(){
 
-        var intent = Intent(this, MainActivity::class.java)
+        Toast.makeText(this, "gotoMain", Toast.LENGTH_SHORT).show()
+
+        /*var intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
-        finish()
+        finish()*/
     }
 }
