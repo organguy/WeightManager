@@ -2,11 +2,13 @@ package kr.co.weightmanager.realm
 
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
+import java.util.*
 
 open class RmWeightData : RealmObject(){
 
     @PrimaryKey
-    var dateTime:String? = null
+    var pk: String? = null
+    var dateTime: Date? = null
     var uid: String? = null
     var weight: String = "0.0"
 

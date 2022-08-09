@@ -5,6 +5,8 @@ import io.realm.RealmResults
 import io.realm.Sort
 import kr.co.weightmanager.realm.RmWeightData
 import kr.co.weightmanager.util.UtilDate
+import java.text.SimpleDateFormat
+import java.util.*
 
 object RealmManager {
 
@@ -19,7 +21,7 @@ object RealmManager {
 
     fun isTodayDataExist() : Boolean{
 
-        var todayDate = UtilDate.getCurrentDate()
+        var todayDate = Date()
 
         var weightData = Realm.getDefaultInstance().where(RmWeightData::class.java)
             .equalTo("dateTime", todayDate)
@@ -59,6 +61,29 @@ object RealmManager {
     }
 
     fun getDailyDiff(): Double{
+        var todayData = getTodayWeightData()
+        var yesterdayData = getYesterdayWeightData()
+
+        var todayWeight = todayData.weight.toDouble()
+        var yesterdayWeight = yesterdayData.weight.toDouble()
+
+        var diff = todayWeight - yesterdayWeight
+
+        return diff
+    }
+
+    fun getThisWeekWeight(): Double{
+        var yerterdayDate = UtilDate.getYesterdayDate()
+        var weekAfterDate = UtilDate.getWeekAfterDate()
+
+       /* var weightList = Realm.getDefaultInstance().where(RmWeightData::class.java)
+            .bet("dateTime", weekAfterDate, yerterdayDate)
+            .findAll()*/
+
+        return 0.0
+    }
+
+    fun getWeeklyDiff(): Double{
         var todayData = getTodayWeightData()
         var yesterdayData = getYesterdayWeightData()
 

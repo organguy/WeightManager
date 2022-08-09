@@ -344,10 +344,12 @@ class MainActivity : AppCompatActivity() {
     inner class MyXAxisFormatter : ValueFormatter() {
         override fun getAxisLabel(value: Float, axis: AxisBase?): String {
 
-            var dateTime = weightList[value.toInt()]!!.dateTime
+            /*var dateTime = weightList[value.toInt()]!!.dateTime
             var date = dateTime!!.substring(5, dateTime.length)
 
-            return date
+            return date*/
+
+            return ""
         }
     }
 }

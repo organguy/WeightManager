@@ -26,7 +26,10 @@ import kr.co.weightmanager.maanger.PropertyManager
 import kr.co.weightmanager.maanger.RealmManager
 import kr.co.weightmanager.realm.RmWeightData
 import kr.co.weightmanager.util.OgLog
+import kr.co.weightmanager.util.UtilDate
 import kr.co.weightmanager.util.UtilSystem
+import java.util.*
+import kotlin.collections.ArrayList
 
 class IntroActivity : AppCompatActivity() {
 
@@ -71,7 +74,6 @@ class IntroActivity : AppCompatActivity() {
             initGoogleLogin()
         }else{
             OgLog.d(auth.currentUser!!.uid)
-            //checkWeightData()
             checkVersion()
         }
     }
@@ -132,16 +134,20 @@ class IntroActivity : AppCompatActivity() {
     private fun checkWeightData(){
         var weightData = RealmManager.getCurrentData()
 
-        var dateTime = "2000-01-01"
+        var dateTime = UtilDate.getDate(2000, 1, 1)
 
         if(weightData != null){
             dateTime = weightData.dateTime!!
         }
 
-        updateWeightData(dateTime)
+        if (dateTime != null) {
+            updateWeightData(dateTime)
+        }
+
+
     }
 
-    private fun updateWeightData(dateTime: String){
+    private fun updateWeightData(dateTime: Date){
         FirestoreManager.getWeightList(dateTime, object : OnResultListener<ArrayList<WeightData>> {
             override fun onSuccess(result: ArrayList<WeightData>) {
                 for(data in result){
@@ -153,15 +159,15 @@ class IntroActivity : AppCompatActivity() {
                     RealmManager.insertWeightData(weightData)
                 }
 
-                if(RealmManager.isTodayDataExist()){
+               /* if(RealmManager.isTodayDataExist()){
                     gotoMain()
                 }else{
                     showWeightDialog()
-                }
+                }*/
             }
 
             override fun onFail() {
-                gotoMain()
+                //gotoMain()
             }
         })
     }
@@ -183,6 +189,7 @@ class IntroActivity : AppCompatActivity() {
                 Toast.makeText(this@IntroActivity, R.string.msg_write_weight_success, Toast.LENGTH_SHORT).show()
 
                 var weightData = RmWeightData()
+                weightData.pk = data.pk
                 weightData.weight = data.weight
                 weightData.dateTime = data.dateTime
                 weightData.uid = data.uid

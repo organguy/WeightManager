@@ -7,11 +7,13 @@ import kr.co.weightmanager.data.WeightData
 import kr.co.weightmanager.interfaces.OnResultListener
 import kr.co.weightmanager.util.OgLog
 import kr.co.weightmanager.util.UtilDate
+import java.util.*
+import kotlin.collections.ArrayList
 
 object FirestoreManager {
 
 
-    fun getWeightList(dateTime: String, resultListener: OnResultListener<ArrayList<WeightData>>){
+    fun getWeightList(dateTime: Date, resultListener: OnResultListener<ArrayList<WeightData>>){
 
 
         var weightList = ArrayList<WeightData>()
@@ -24,7 +26,7 @@ object FirestoreManager {
                 try{
                     for(document in it.result){
                         var weightData = WeightData()
-                        weightData.dateTime = document["dateTime"] as String
+                        weightData.dateTime = document["dateTime"] as Date
                         weightData.uid = document["uid"] as String
                         weightData.weight = document["weight"] as String
 
@@ -48,6 +50,7 @@ object FirestoreManager {
     fun insertWeightData(weight: String, resultListener: OnResultListener<WeightData>){
 
         var weightData = WeightData()
+        weightData.pk = UtilDate.getCurrentDateString()
         weightData.uid = FirebaseAuth.getInstance().uid
         weightData.weight = weight
         weightData.dateTime = UtilDate.getCurrentDate()
