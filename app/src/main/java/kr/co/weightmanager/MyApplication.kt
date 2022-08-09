@@ -2,7 +2,6 @@ package kr.co.weightmanager
 
 import android.app.Application
 import android.content.Context
-import com.squareup.okhttp.internal.Internal.instance
 import io.realm.Realm
 import io.realm.RealmConfiguration
 
@@ -26,18 +25,11 @@ class MyApplication : Application() {
 
     private fun initRealm(){
         Realm.init(this)
-        var config = RealmConfiguration.Builder()
+        val config = RealmConfiguration.Builder()
             .allowWritesOnUiThread(true)
             .deleteRealmIfMigrationNeeded()
             .build()
 
         Realm.setDefaultConfiguration(config)
     }
-
-    fun getContext(): Context{
-        return this
-    }
-
-
-
 }

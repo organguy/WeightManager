@@ -6,7 +6,7 @@ import java.util.*
 
 class UtilDate {
     companion object{
-        fun getDate(year: Int, month: Int, date: Int): Date? {
+        fun getDate(year: Int, month: Int, date: Int): Date {
             val cal = Calendar.getInstance()
             cal.set(year, month-1, date, 0, 0, 0)
             return Date(cal.timeInMillis)
@@ -29,7 +29,7 @@ class UtilDate {
         fun getCurrentDateString(): String? {
             val cal = Calendar.getInstance()
             val format = SimpleDateFormat("yyyy-MM-dd")
-            var currentDate = format.format(cal.time)
+            val currentDate = format.format(cal.time)
             return currentDate
         }
 
@@ -37,7 +37,7 @@ class UtilDate {
             val cal = Calendar.getInstance()
             val format = SimpleDateFormat("yyyy-MM-dd")
             cal.add(Calendar.DATE, -1)
-            var yesterdayDate = format.format(cal.time)
+            val yesterdayDate = format.format(cal.time)
             return yesterdayDate
         }
 
@@ -45,7 +45,7 @@ class UtilDate {
             val cal = Calendar.getInstance()
             val format = SimpleDateFormat("yyyy-MM-dd")
             cal.add(Calendar.DATE, -7)
-            var yesterdayDate = format.format(cal.time)
+            val yesterdayDate = format.format(cal.time)
             return yesterdayDate
         }
     }

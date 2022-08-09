@@ -20,7 +20,7 @@ class AlarmDialog : DialogFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         if(dialog != null){
             val w: Window? = dialog!!.window
@@ -42,9 +42,9 @@ class AlarmDialog : DialogFragment() {
 
         if(!TextUtils.isEmpty(PropertyManager.getAlarm())){
 
-            var alarmTime = PropertyManager.getAlarm()
-            var hour = alarmTime!!.split(",")[0]
-            var min = alarmTime!!.split(",")[1]
+            val alarmTime = PropertyManager.getAlarm()
+            val hour = alarmTime!!.split(",")[0]
+            val min = alarmTime.split(",")[1]
 
             binding.tpAlarm.hour = hour.toInt()
             binding.tpAlarm.minute = min.toInt()
@@ -57,10 +57,10 @@ class AlarmDialog : DialogFragment() {
         mListener = listener
     }
 
-    fun setAlarm(){
+    private fun setAlarm(){
         if(mListener != null){
-            var hour = binding.tpAlarm.hour
-            var min = binding.tpAlarm.minute
+            val hour = binding.tpAlarm.hour
+            val min = binding.tpAlarm.minute
             mListener!!.onResult(hour, min)
             dismiss()
         }

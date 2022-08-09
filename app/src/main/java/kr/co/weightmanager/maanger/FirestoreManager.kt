@@ -16,7 +16,7 @@ object FirestoreManager {
     fun getWeightList(dateTime: Date, resultListener: OnResultListener<ArrayList<WeightData>>){
 
 
-        var weightList = ArrayList<WeightData>()
+        val weightList = ArrayList<WeightData>()
 
         FirebaseFirestore.getInstance().collection("weight")
             .whereEqualTo("uid", FirebaseAuth.getInstance().uid)
@@ -25,7 +25,7 @@ object FirestoreManager {
             .addOnCompleteListener { it ->
                 try{
                     for(document in it.result){
-                        var weightData = WeightData()
+                        val weightData = WeightData()
                         weightData.dateTime = document["dateTime"] as Date
                         weightData.uid = document["uid"] as String
                         weightData.weight = document["weight"] as String
@@ -49,7 +49,7 @@ object FirestoreManager {
 
     fun insertWeightData(weight: String, resultListener: OnResultListener<WeightData>){
 
-        var weightData = WeightData()
+        val weightData = WeightData()
         weightData.pk = UtilDate.getCurrentDateString()
         weightData.uid = FirebaseAuth.getInstance().uid
         weightData.weight = weight
@@ -75,7 +75,7 @@ object FirestoreManager {
             .get()
             .addOnCompleteListener { it ->
                 try{
-                    var version = it.result["version"] as String
+                    val version = it.result["version"] as String
                     resultListener.onSuccess(version)
                 }catch (e: FirebaseFirestoreException) {
                     OgLog.d(e.localizedMessage)

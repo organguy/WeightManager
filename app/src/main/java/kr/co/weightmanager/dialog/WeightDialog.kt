@@ -21,7 +21,7 @@ class WeightDialog : DialogFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         if(dialog != null){
             val w: Window? = dialog!!.window
@@ -48,11 +48,11 @@ class WeightDialog : DialogFragment() {
         mListener = listener
     }
 
-    fun insertWeight(){
+    private fun insertWeight(){
 
         if(!TextUtils.isEmpty(binding.etWeight.text)){
             if(mListener != null){
-                var weight = binding.etWeight.text.toString()
+                val weight = binding.etWeight.text.toString()
                 mListener!!.onResult(weight)
                 dismiss()
             }

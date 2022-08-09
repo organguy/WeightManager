@@ -3,15 +3,10 @@ package kr.co.weightmanager.dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.text.TextUtils
 import android.view.*
 import androidx.fragment.app.DialogFragment
-import kr.co.weightmanager.databinding.DialogAlarmBinding
 import kr.co.weightmanager.databinding.DialogLogoutBinding
 import kr.co.weightmanager.interfaces.OnLogoutListener
-import kr.co.weightmanager.interfaces.SetAlarmListener
-import kr.co.weightmanager.maanger.PropertyManager
-import kr.co.weightmanager.maanger.PropertyManager.setAlarm
 
 class LogoutDialog : DialogFragment() {
 
@@ -23,7 +18,7 @@ class LogoutDialog : DialogFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         if(dialog != null){
             val w: Window? = dialog!!.window

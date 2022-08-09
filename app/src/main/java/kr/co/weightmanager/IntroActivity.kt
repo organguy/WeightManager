@@ -9,7 +9,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
@@ -29,7 +28,6 @@ import kr.co.weightmanager.util.OgLog
 import kr.co.weightmanager.util.UtilDate
 import kr.co.weightmanager.util.UtilSystem
 import java.util.*
-import kotlin.collections.ArrayList
 
 class IntroActivity : AppCompatActivity() {
 
@@ -43,7 +41,7 @@ class IntroActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityIntroBinding.inflate(layoutInflater);
+        binding = ActivityIntroBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         checkNetwork()
@@ -88,9 +86,8 @@ class IntroActivity : AppCompatActivity() {
         getResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
 
             val task = GoogleSignIn.getSignedInAccountFromIntent(it.data)
-            var account: GoogleSignInAccount? = null
             try {
-                account = task.getResult(ApiException::class.java)
+                val account = task.getResult(ApiException::class.java)
                 firebaseAuthWithGoogle(account!!.idToken)
             } catch (e: ApiException) {
                 Toast.makeText(this, e.localizedMessage, Toast.LENGTH_SHORT).show()
@@ -132,7 +129,7 @@ class IntroActivity : AppCompatActivity() {
     }
 
     private fun checkWeightData(){
-        var weightData = RealmManager.getCurrentData()
+        val weightData = RealmManager.getCurrentData()
 
         var dateTime = UtilDate.getDate(2000, 1, 1)
 
@@ -140,16 +137,14 @@ class IntroActivity : AppCompatActivity() {
             dateTime = weightData.dateTime!!
         }
 
-        if (dateTime != null) {
-            updateWeightData(dateTime)
-        }
+        updateWeightData(dateTime)
     }
 
     private fun updateWeightData(dateTime: Date){
         FirestoreManager.getWeightList(dateTime, object : OnResultListener<ArrayList<WeightData>> {
             override fun onSuccess(result: ArrayList<WeightData>) {
                 for(data in result){
-                    var weightData = RmWeightData()
+                    val weightData = RmWeightData()
                     weightData.pk = data.pk
                     weightData.weight = data.weight
                     weightData.dateTime = data.dateTime
@@ -187,7 +182,7 @@ class IntroActivity : AppCompatActivity() {
             override fun onSuccess(data: WeightData) {
                 Toast.makeText(this@IntroActivity, R.string.msg_write_weight_success, Toast.LENGTH_SHORT).show()
 
-                var weightData = RmWeightData()
+                val weightData = RmWeightData()
                 weightData.pk = data.pk
                 weightData.weight = data.weight
                 weightData.dateTime = data.dateTime
@@ -208,10 +203,8 @@ class IntroActivity : AppCompatActivity() {
 
     private fun gotoMain(){
 
-        Toast.makeText(this, "gotoMain", Toast.LENGTH_SHORT).show()
-
-        /*var intent = Intent(this, MainActivity::class.java)
+        val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
-        finish()*/
+        finish()
     }
 }

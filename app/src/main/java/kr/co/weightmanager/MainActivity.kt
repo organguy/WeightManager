@@ -37,6 +37,7 @@ import kr.co.weightmanager.maanger.PropertyManager
 import kr.co.weightmanager.maanger.RealmManager
 import kr.co.weightmanager.realm.RmWeightData
 import kr.co.weightmanager.util.VersionCheck
+import kotlin.math.ceil
 import kotlin.math.min
 
 
@@ -101,7 +102,7 @@ class MainActivity : AppCompatActivity() {
         val ivNavProfile = headerView.findViewById<ImageView>(R.id.iv_nav_profile)
         val tvNavProfile = headerView.findViewById<TextView>(R.id.tv_nav_profile)
         val tvNavInfo = headerView.findViewById<TextView>(R.id.tv_nav_info)
-        var authUser = FirebaseAuth.getInstance().currentUser
+        val authUser = FirebaseAuth.getInstance().currentUser
 
         if (authUser!!.photoUrl != null) {
             Glide.with(this)
@@ -140,7 +141,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initNavItemGoal(){
-        var goal = PropertyManager.getGoal()
+        val goal = PropertyManager.getGoal()
 
         if(!TextUtils.isEmpty(goal)){
             menuItemGoal.title = "${getString(R.string.menu_item_goal)}     -      ${goal}kg"
@@ -150,12 +151,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initNavItemAlarm(){
-        var alarmTime = PropertyManager.getAlarm()
+        val alarmTime = PropertyManager.getAlarm()
 
         if(!TextUtils.isEmpty(alarmTime)){
 
-            var hour = alarmTime!!.split(",")[0]
-            var min = alarmTime.split(",")[1]
+            val hour = alarmTime!!.split(",")[0]
+            val min = alarmTime.split(",")[1]
 
             menuItemAlarm.title = "${getString(R.string.menu_item_alram)}     -     $hour 시 $min 분"
         }else{
@@ -166,7 +167,7 @@ class MainActivity : AppCompatActivity() {
     private fun iniNavItemVersion(){
         menuItemVersion.title = "${getString(R.string.menu_item_version)}     -     ${BuildConfig.VERSION_NAME}"
 
-        var badgeVersion = menuItemVersion.actionView as TextView
+        val badgeVersion = menuItemVersion.actionView as TextView
         badgeVersion.gravity = Gravity.CENTER_VERTICAL
         badgeVersion.setTypeface(null, Typeface.BOLD)
         badgeVersion.setTextColor(getColor(android.R.color.holo_red_dark))
@@ -185,9 +186,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun initChart(){
 
-        var goalWeight = PropertyManager.getGoal()
-        var maxWeight = RealmManager.getMaxWeight()
-        var minWeight = RealmManager.getMinWeight()
+        val goalWeight = PropertyManager.getGoal()
+        val maxWeight = RealmManager.getMaxWeight()
+        val minWeight = RealmManager.getMinWeight()
 
         var axisMinWeight = if(!TextUtils.isEmpty(goalWeight)){
             min(goalWeight!!.toDouble(), minWeight.toDouble()).toInt()
@@ -197,7 +198,7 @@ class MainActivity : AppCompatActivity() {
 
         axisMinWeight = (axisMinWeight / 5) * 5
 
-        var axisMaxWeight = maxWeight.toDouble().toInt()
+        var axisMaxWeight = ceil(maxWeight.toDouble()).toInt()
         if(axisMaxWeight % 5 != 0){
             axisMaxWeight = ((axisMaxWeight / 5) + 1) * 5
         }
@@ -223,10 +224,8 @@ class MainActivity : AppCompatActivity() {
         }
 
 
-        var dataVals = ArrayList<BarEntry>()
-        var colors = IntArray(weightList.size)
-
-
+        val dataVals = ArrayList<BarEntry>()
+        val colors = IntArray(weightList.size)
 
         for(i: Int in 0 until weightList.size){
             dataVals.add(BarEntry(i.toFloat(), weightList[i]!!.weight.toFloat()))
@@ -244,14 +243,13 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        var barDataSet = BarDataSet(dataVals, "전체 현황")
+        val barDataSet = BarDataSet(dataVals, "전체 현황")
         barDataSet.setColors(colors, this)
 
-        var dataSets = ArrayList<IBarDataSet>()
+        val dataSets = ArrayList<IBarDataSet>()
         dataSets.add(barDataSet)
 
-        var data = BarData(dataSets)
-        //data.barWidth = 0.3f
+        val data = BarData(dataSets)
         binding.bcChart.data = data
         binding.bcChart.invalidate()
     }
@@ -281,7 +279,7 @@ class MainActivity : AppCompatActivity() {
 
     fun updateGoal(weight: String){
         PropertyManager.setGoal(weight)
-        var goal = PropertyManager.getGoal()
+        val goal = PropertyManager.getGoal()
 
         if(!TextUtils.isEmpty(goal)){
             menuItemGoal.title = "${getString(R.string.menu_item_goal)} - $goal"
@@ -302,7 +300,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun updateAlarm(hour: Int, min: Int){
-        var alarmTime = "$hour,$min"
+        val alarmTime = "$hour,$min"
         PropertyManager.setAlarm(alarmTime)
     }
 
@@ -344,12 +342,10 @@ class MainActivity : AppCompatActivity() {
     inner class MyXAxisFormatter : ValueFormatter() {
         override fun getAxisLabel(value: Float, axis: AxisBase?): String {
 
-            /*var dateTime = weightList[value.toInt()]!!.dateTime
-            var date = dateTime!!.substring(5, dateTime.length)
+            val dateTime = weightList[value.toInt()]!!.pk
+            val date = dateTime!!.substring(5, dateTime.length)
 
-            return date*/
-
-            return ""
+            return date
         }
     }
 }
