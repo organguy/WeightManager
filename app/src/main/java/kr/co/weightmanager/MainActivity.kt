@@ -36,6 +36,7 @@ import kr.co.weightmanager.interfaces.SetAlarmListener
 import kr.co.weightmanager.maanger.PropertyManager
 import kr.co.weightmanager.maanger.RealmManager
 import kr.co.weightmanager.realm.RmWeightData
+import kr.co.weightmanager.util.OgLog
 import kr.co.weightmanager.util.VersionCheck
 import kotlin.math.ceil
 import kotlin.math.min
@@ -66,16 +67,27 @@ class MainActivity : AppCompatActivity() {
         initChart()
     }
 
-    fun initData(){
+    private fun initData(){
+
+        OgLog.d("initData start")
+
         weightList.addAll(RealmManager.getWeightResults())
         todayWeightData = RealmManager.getTodayWeightData()
         dailyDiff = RealmManager.getDailyDiff()
         weeklyWeight = RealmManager.getWeekAvgWeight()
         weeklyDiff = RealmManager.getWeeklyDiff()
+
+        OgLog.d("weeklyWeight : $weeklyWeight")
+        OgLog.d("weeklyDiff : $weeklyDiff")
+
+        OgLog.d("initData end")
     }
 
     @SuppressLint("SetTextI18n")
     fun initView(){
+
+        OgLog.d("initView start")
+
         binding.tvDailyWeight.text = "${todayWeightData.weight}kg"
         binding.tvDailyDiff.text = String.format("%.1f", dailyDiff)
 

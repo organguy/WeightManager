@@ -48,6 +48,8 @@ class UtilDate {
             val month = cal.get(Calendar.MONTH) + 1
             val date = cal.get(Calendar.DATE)
 
+            OgLog.d("yesterday : $year,$month,$date" )
+
 
             val yesterdayDate = getDate(year, month, date)
 
@@ -56,10 +58,14 @@ class UtilDate {
 
         fun getAWeekAgoDate(): Date{
             val cal = Calendar.getInstance()
-            cal.add(Calendar.DATE, -7)
+            cal.add(Calendar.DATE, -8)
             val year = cal.get(Calendar.YEAR)
             val month = cal.get(Calendar.MONTH) + 1
             val date = cal.get(Calendar.DATE)
+
+            val f = SimpleDateFormat("dd-MMM-yyyy")
+
+            OgLog.d("weekAgo : $year,$month,$date" )
 
 
             val weekAgoDate = getDate(year, month, date)

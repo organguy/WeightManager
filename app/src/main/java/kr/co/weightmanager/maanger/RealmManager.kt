@@ -4,6 +4,7 @@ import io.realm.Realm
 import io.realm.RealmResults
 import io.realm.Sort
 import kr.co.weightmanager.realm.RmWeightData
+import kr.co.weightmanager.util.OgLog
 import kr.co.weightmanager.util.UtilDate
 
 object RealmManager {
@@ -67,8 +68,8 @@ object RealmManager {
         val yesterdayData = getYesterdayWeightData()
 
         return if(yesterdayData != null){
-            val todayWeight = todayData.weight.toDouble()
-            val yesterdayWeight = yesterdayData.weight.toDouble()
+            val todayWeight = todayData.weight
+            val yesterdayWeight = yesterdayData.weight
 
             val diff = todayWeight - yesterdayWeight
 
@@ -79,23 +80,31 @@ object RealmManager {
     }
 
     fun getWeekAvgWeight(): Double{
-        var yerterdayDate = UtilDate.getYesterdayDate()
-        var weekAfterDate = UtilDate.getAWeekAgoDate()
+        val todayDate = UtilDate.getTodayDate()
+        val weekAfterDate = UtilDate.getAWeekAgoDate()
 
-        var avgWeight = Realm.getDefaultInstance().where(RmWeightData::class.java)
-            .between("dateTime", weekAfterDate, yerterdayDate)
+        val avgWeight = Realm.getDefaultInstance().where(RmWeightData::class.java)
+            .lessThan("dateTime",todayDate)
+            .greaterThan("dateTime",weekAfterDate)
             .average("weight")
+
+        val count = Realm.getDefaultInstance().where(RmWeightData::class.java)
+            .lessThan("dateTime",todayDate)
+            .greaterThan("dateTime",weekAfterDate)
+            .count()
+
+        OgLog.d("week count : $count")
 
         return avgWeight
     }
 
     fun getWeeklyDiff(): Double{
-        var todayData = getTodayWeightData()
+        val todayData = getTodayWeightData()
 
-        var todayWeight = todayData.weight.toDouble()
-        var weekAvgWeight = getWeekAvgWeight()
+        val todayWeight = todayData.weight
+        val weekAvgWeight = getWeekAvgWeight()
 
-        var diff = todayWeight - weekAvgWeight
+        val diff = todayWeight - weekAvgWeight
 
         return diff
     }
