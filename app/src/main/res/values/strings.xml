@@ -19,4 +19,5 @@
     <string name="new_version">NEW</string>
     <string name="msg_logout">로그아웃 하시겠습니까?</string>
     <string name="msg_re_logout">로그아웃 실패 다시 시도해 주세요.</string>
+    <string name="weekly">Weekly</string>
 </resources>

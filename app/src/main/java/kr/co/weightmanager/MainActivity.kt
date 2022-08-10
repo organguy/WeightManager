@@ -47,6 +47,8 @@ class MainActivity : AppCompatActivity() {
     var  weightList = RealmList<RmWeightData>()
     private lateinit var todayWeightData: RmWeightData
     private var dailyDiff = 0.0
+    private var weeklyWeight = 0.0
+    private var weeklyDiff = 0.0
 
     lateinit var menuItemGoal: MenuItem
     lateinit var menuItemAlarm: MenuItem
@@ -68,6 +70,8 @@ class MainActivity : AppCompatActivity() {
         weightList.addAll(RealmManager.getWeightResults())
         todayWeightData = RealmManager.getTodayWeightData()
         dailyDiff = RealmManager.getDailyDiff()
+        weeklyWeight = RealmManager.getWeekAvgWeight()
+        weeklyDiff = RealmManager.getWeeklyDiff()
     }
 
     @SuppressLint("SetTextI18n")
@@ -81,6 +85,17 @@ class MainActivity : AppCompatActivity() {
             binding.ivDailyDiff.setImageResource(R.drawable.ic_diff_arrow_equal)
         }else{
             binding.ivDailyDiff.setImageResource(R.drawable.ic_diff_arrow_up)
+        }
+
+        binding.tvWeeklyWeight.text = "${weeklyWeight}kg"
+        binding.tvWeeklyDiff.text = String.format("%.1f", weeklyDiff)
+
+        if(weeklyDiff < 0.0){
+            binding.ivWeeklyDiff.setImageResource(R.drawable.ic_diff_arrow_down)
+        }else if(weeklyDiff == 0.0){
+            binding.ivWeeklyDiff.setImageResource(R.drawable.ic_diff_arrow_equal)
+        }else{
+            binding.ivWeeklyDiff.setImageResource(R.drawable.ic_diff_arrow_up)
         }
     }
 

@@ -19,7 +19,7 @@ object RealmManager {
 
     fun isTodayDataExist() : Boolean{
 
-        val todayDate = UtilDate.getCurrentDateString()
+        val todayDate = UtilDate.getTodayDateString()
 
         val weightData = Realm.getDefaultInstance().where(RmWeightData::class.java)
             .equalTo("pk", todayDate)
@@ -50,7 +50,7 @@ object RealmManager {
         return weightData!!
     }
 
-    fun getYesterdayWeightData(): RmWeightData? {
+    private fun getYesterdayWeightData(): RmWeightData? {
         val weightList = Realm.getDefaultInstance().where(RmWeightData::class.java)
             .sort("dateTime", Sort.DESCENDING)
             .findAll()
@@ -78,30 +78,29 @@ object RealmManager {
         }
     }
 
-    fun getThisWeekWeight(): Double{
+    fun getWeekAvgWeight(): Double{
         var yerterdayDate = UtilDate.getYesterdayDate()
-        var weekAfterDate = UtilDate.getWeekAfterDate()
+        var weekAfterDate = UtilDate.getAWeekAgoDate()
 
-       /* var weightList = Realm.getDefaultInstance().where(RmWeightData::class.java)
-            .bet("dateTime", weekAfterDate, yerterdayDate)
-            .findAll()*/
+        var avgWeight = Realm.getDefaultInstance().where(RmWeightData::class.java)
+            .between("dateTime", weekAfterDate, yerterdayDate)
+            .average("weight")
 
-        return 0.0
+        return avgWeight
     }
 
-    /*fun getWeeklyDiff(): Double{
+    fun getWeeklyDiff(): Double{
         var todayData = getTodayWeightData()
-        var yesterdayData = getYesterdayWeightData()
 
         var todayWeight = todayData.weight.toDouble()
-        var yesterdayWeight = yesterdayData.weight.toDouble()
+        var weekAvgWeight = getWeekAvgWeight()
 
-        var diff = todayWeight - yesterdayWeight
+        var diff = todayWeight - weekAvgWeight
 
         return diff
-    }*/
+    }
 
-    fun getMaxWeight(): String{
+    fun getMaxWeight(): Double{
         val weightData = Realm.getDefaultInstance().where(RmWeightData::class.java)
             .sort("weight", Sort.DESCENDING)
             .findFirst()
@@ -109,7 +108,7 @@ object RealmManager {
         return weightData!!.weight
     }
 
-    fun getMinWeight(): String{
+    fun getMinWeight(): Double{
         val weightData = Realm.getDefaultInstance().where(RmWeightData::class.java)
             .sort("weight", Sort.ASCENDING)
             .findFirst()

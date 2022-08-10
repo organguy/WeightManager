@@ -12,41 +12,58 @@ class UtilDate {
             return Date(cal.timeInMillis)
         }
 
+        @SuppressLint("SimpleDateFormat")
+        fun getDateToString(date: Date): String? {
+            val format = SimpleDateFormat("yyyy-MM-dd")
+            val todayDateStr = format.format(date)
+            return todayDateStr
+        }
+
 
         @SuppressLint("SimpleDateFormat")
-        fun getCurrentDate(): Date? {
+        fun getTodayDate(): Date? {
             val cal = Calendar.getInstance()
             val year = cal.get(Calendar.YEAR)
             val month = cal.get(Calendar.MONTH) + 1
             val date = cal.get(Calendar.DATE)
 
-            val currentDate = getDate(year, month, date)
+            val todayDate = getDate(year, month, date)
 
-            return currentDate
+            return todayDate
         }
 
         @SuppressLint("SimpleDateFormat")
-        fun getCurrentDateString(): String? {
+        fun getTodayDateString(): String? {
             val cal = Calendar.getInstance()
             val format = SimpleDateFormat("yyyy-MM-dd")
-            val currentDate = format.format(cal.time)
-            return currentDate
+            val todayDateStr = format.format(cal.time)
+            return todayDateStr
         }
 
-        fun getYesterdayDate(): String{
+        fun getYesterdayDate(): Date{
             val cal = Calendar.getInstance()
-            val format = SimpleDateFormat("yyyy-MM-dd")
             cal.add(Calendar.DATE, -1)
-            val yesterdayDate = format.format(cal.time)
+
+            val year = cal.get(Calendar.YEAR)
+            val month = cal.get(Calendar.MONTH) + 1
+            val date = cal.get(Calendar.DATE)
+
+
+            val yesterdayDate = getDate(year, month, date)
+
             return yesterdayDate
         }
 
-        fun getWeekAfterDate(): String{
+        fun getAWeekAgoDate(): Date{
             val cal = Calendar.getInstance()
-            val format = SimpleDateFormat("yyyy-MM-dd")
             cal.add(Calendar.DATE, -7)
-            val yesterdayDate = format.format(cal.time)
-            return yesterdayDate
+            val year = cal.get(Calendar.YEAR)
+            val month = cal.get(Calendar.MONTH) + 1
+            val date = cal.get(Calendar.DATE)
+
+
+            val weekAgoDate = getDate(year, month, date)
+            return weekAgoDate
         }
     }
 }

@@ -131,10 +131,10 @@ class IntroActivity : AppCompatActivity() {
     private fun checkWeightData(){
         val weightData = RealmManager.getCurrentData()
 
-        var dateTime = UtilDate.getDate(2000, 1, 1)
-
-        if(weightData != null){
-            dateTime = weightData.dateTime!!
+        val dateTime = if(weightData != null){
+            weightData.dateTime!!
+        }else{
+            UtilDate.getDate(2000, 1, 1)
         }
 
         updateWeightData(dateTime)
@@ -145,7 +145,7 @@ class IntroActivity : AppCompatActivity() {
             override fun onSuccess(result: ArrayList<WeightData>) {
                 for(data in result){
                     val weightData = RmWeightData()
-                    weightData.pk = data.pk
+                    weightData.pk = UtilDate.getDateToString(data.dateTime!!)
                     weightData.weight = data.weight
                     weightData.dateTime = data.dateTime
                     weightData.uid = data.uid
@@ -171,13 +171,13 @@ class IntroActivity : AppCompatActivity() {
         weightDialog.isCancelable = false
         weightDialog.setOnInsertWeightListener(object : InsertGoalListener {
             override fun onResult(weight: String) {
-                insertTodayWeight(weight)
+                insertTodayWeight(weight.toDouble())
             }
         })
         weightDialog.show(supportFragmentManager, "dialog")
     }
 
-    private fun insertTodayWeight(weight: String){
+    private fun insertTodayWeight(weight: Double){
         FirestoreManager.insertWeightData(weight, object: OnResultListener<WeightData>{
             override fun onSuccess(data: WeightData) {
                 Toast.makeText(this@IntroActivity, R.string.msg_write_weight_success, Toast.LENGTH_SHORT).show()

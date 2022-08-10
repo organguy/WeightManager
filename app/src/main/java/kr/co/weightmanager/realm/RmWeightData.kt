@@ -10,7 +10,7 @@ open class RmWeightData : RealmObject(){
     var pk: String? = null
     var dateTime: Date? = null
     var uid: String? = null
-    var weight: String = "0.0"
+    var weight: Double = 0.0
 
     override fun toString(): String {
         return "$dateTime  _ $uid _ $weight"

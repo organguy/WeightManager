@@ -3,6 +3,7 @@ package kr.co.weightmanager.maanger
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreException
+import com.google.type.DateTime
 import kr.co.weightmanager.data.WeightData
 import kr.co.weightmanager.interfaces.OnResultListener
 import kr.co.weightmanager.util.OgLog
@@ -26,9 +27,9 @@ object FirestoreManager {
                 try{
                     for(document in it.result){
                         val weightData = WeightData()
-                        weightData.dateTime = document["dateTime"] as Date
-                        weightData.uid = document["uid"] as String
-                        weightData.weight = document["weight"] as String
+                        weightData.dateTime = document.getDate("dateTime")
+                        weightData.uid = document.getString("uid")
+                        weightData.weight = document.getDouble("weight")!!
 
                         weightList.add(weightData)
                     }
@@ -47,13 +48,13 @@ object FirestoreManager {
             }
     }
 
-    fun insertWeightData(weight: String, resultListener: OnResultListener<WeightData>){
+    fun insertWeightData(weight: Double, resultListener: OnResultListener<WeightData>){
 
         val weightData = WeightData()
-        weightData.pk = UtilDate.getCurrentDateString()
+        weightData.pk = UtilDate.getTodayDateString()
         weightData.uid = FirebaseAuth.getInstance().uid
         weightData.weight = weight
-        weightData.dateTime = UtilDate.getCurrentDate()
+        weightData.dateTime = UtilDate.getTodayDate()
 
 
         FirebaseFirestore.getInstance().collection("weight").document()
@@ -75,8 +76,10 @@ object FirestoreManager {
             .get()
             .addOnCompleteListener { it ->
                 try{
-                    val version = it.result["version"] as String
-                    resultListener.onSuccess(version)
+                    val version = it.result.getString("version")
+                    if (version != null) {
+                        resultListener.onSuccess(version)
+                    }
                 }catch (e: FirebaseFirestoreException) {
                     OgLog.d(e.localizedMessage)
                     resultListener.onFail()
