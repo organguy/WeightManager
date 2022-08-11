@@ -109,6 +109,36 @@ object RealmManager {
         return diff
     }
 
+    fun getMonthAvgWeight(): Double{
+        val todayDate = UtilDate.getTodayDate()
+        val monthAfterDate = UtilDate.getAMonthAgoDate()
+
+        val avgWeight = Realm.getDefaultInstance().where(RmWeightData::class.java)
+            .lessThan("dateTime",todayDate)
+            .greaterThan("dateTime",monthAfterDate)
+            .average("weight")
+
+        val count = Realm.getDefaultInstance().where(RmWeightData::class.java)
+            .lessThan("dateTime",todayDate)
+            .greaterThan("dateTime",monthAfterDate)
+            .count()
+
+        OgLog.d("week count : $count")
+
+        return avgWeight
+    }
+
+    fun getMonthlyDiff(): Double{
+        val todayData = getTodayWeightData()
+
+        val todayWeight = todayData.weight
+        val monthAvgWeight = getMonthAvgWeight()
+
+        val diff = todayWeight - monthAvgWeight
+
+        return diff
+    }
+
     fun getMaxWeight(): Double{
         val weightData = Realm.getDefaultInstance().where(RmWeightData::class.java)
             .sort("weight", Sort.DESCENDING)

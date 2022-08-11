@@ -63,10 +63,17 @@ class UtilDate {
             val month = cal.get(Calendar.MONTH) + 1
             val date = cal.get(Calendar.DATE)
 
-            val f = SimpleDateFormat("dd-MMM-yyyy")
+            val weekAgoDate = getDate(year, month, date)
+            return weekAgoDate
+        }
 
-            OgLog.d("weekAgo : $year,$month,$date" )
+        fun getAMonthAgoDate(): Date{
+            val cal = Calendar.getInstance()
+            cal.add(Calendar.MONTH, -1)
 
+            val year = cal.get(Calendar.YEAR)
+            val month = cal.get(Calendar.MONTH) + 1
+            val date = cal.get(Calendar.DATE)
 
             val weekAgoDate = getDate(year, month, date)
             return weekAgoDate

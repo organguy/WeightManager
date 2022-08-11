@@ -25,6 +25,7 @@ import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
+import io.realm.Realm
 import io.realm.RealmList
 import kr.co.weightmanager.databinding.ActivityMainBinding
 import kr.co.weightmanager.dialog.AlarmDialog
@@ -50,6 +51,8 @@ class MainActivity : AppCompatActivity() {
     private var dailyDiff = 0.0
     private var weeklyWeight = 0.0
     private var weeklyDiff = 0.0
+    private var monthlyWeight = 0.0
+    private var monthlyDiff = 0.0
 
     lateinit var menuItemGoal: MenuItem
     lateinit var menuItemAlarm: MenuItem
@@ -68,19 +71,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initData(){
-
-        OgLog.d("initData start")
-
         weightList.addAll(RealmManager.getWeightResults())
         todayWeightData = RealmManager.getTodayWeightData()
         dailyDiff = RealmManager.getDailyDiff()
         weeklyWeight = RealmManager.getWeekAvgWeight()
         weeklyDiff = RealmManager.getWeeklyDiff()
-
-        OgLog.d("weeklyWeight : $weeklyWeight")
-        OgLog.d("weeklyDiff : $weeklyDiff")
-
-        OgLog.d("initData end")
+        monthlyWeight = RealmManager.getMonthAvgWeight()
+        monthlyDiff = RealmManager.getWeeklyDiff()
     }
 
     @SuppressLint("SetTextI18n")
@@ -88,7 +85,7 @@ class MainActivity : AppCompatActivity() {
 
         OgLog.d("initView start")
 
-        binding.tvDailyWeight.text = "${todayWeightData.weight}kg"
+        binding.tvDailyWeight.text = "${String.format("%.1f", todayWeightData.weight)}kg"
         binding.tvDailyDiff.text = String.format("%.1f", dailyDiff)
 
         if(dailyDiff < 0.0){
@@ -99,7 +96,7 @@ class MainActivity : AppCompatActivity() {
             binding.ivDailyDiff.setImageResource(R.drawable.ic_diff_arrow_up)
         }
 
-        binding.tvWeeklyWeight.text = "${weeklyWeight}kg"
+        binding.tvWeeklyWeight.text = "${String.format("%.1f", weeklyWeight)}kg"
         binding.tvWeeklyDiff.text = String.format("%.1f", weeklyDiff)
 
         if(weeklyDiff < 0.0){
@@ -108,6 +105,17 @@ class MainActivity : AppCompatActivity() {
             binding.ivWeeklyDiff.setImageResource(R.drawable.ic_diff_arrow_equal)
         }else{
             binding.ivWeeklyDiff.setImageResource(R.drawable.ic_diff_arrow_up)
+        }
+
+        binding.tvMonthlyWeight.text = "${String.format("%.1f", monthlyWeight)}kg"
+        binding.tvMonthlyDiff.text = String.format("%.1f", monthlyDiff)
+
+        if(monthlyDiff < 0.0){
+            binding.ivMonthlyDiff.setImageResource(R.drawable.ic_diff_arrow_down)
+        }else if(monthlyDiff == 0.0){
+            binding.ivMonthlyDiff.setImageResource(R.drawable.ic_diff_arrow_equal)
+        }else{
+            binding.ivMonthlyDiff.setImageResource(R.drawable.ic_diff_arrow_up)
         }
     }
 
