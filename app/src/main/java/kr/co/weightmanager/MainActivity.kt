@@ -2,6 +2,9 @@ package kr.co.weightmanager
 
 
 import android.annotation.SuppressLint
+import android.app.AlarmManager
+import android.app.Application
+import android.app.PendingIntent
 import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
@@ -39,6 +42,8 @@ import kr.co.weightmanager.maanger.RealmManager
 import kr.co.weightmanager.realm.RmWeightData
 import kr.co.weightmanager.util.OgLog
 import kr.co.weightmanager.util.VersionCheck
+import java.util.*
+import kotlin.collections.ArrayList
 import kotlin.math.ceil
 import kotlin.math.min
 
@@ -57,6 +62,8 @@ class MainActivity : AppCompatActivity() {
     lateinit var menuItemGoal: MenuItem
     lateinit var menuItemAlarm: MenuItem
     lateinit var menuItemVersion: MenuItem
+
+    internal var alarmManager: AlarmManager? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -78,6 +85,8 @@ class MainActivity : AppCompatActivity() {
         weeklyDiff = RealmManager.getWeeklyDiff()
         monthlyWeight = RealmManager.getMonthAvgWeight()
         monthlyDiff = RealmManager.getWeeklyDiff()
+
+        alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager?
     }
 
     @SuppressLint("SetTextI18n")
@@ -337,6 +346,29 @@ class MainActivity : AppCompatActivity() {
     fun updateAlarm(hour: Int, min: Int){
         val alarmTime = "$hour,$min"
         PropertyManager.setAlarm(alarmTime)
+
+        val receiverIntent = Intent(applicationContext, AlarmReceiver::class.java)
+        val pendingIntent = PendingIntent.getBroadcast(applicationContext, 0, receiverIntent, 0)
+
+        alarmManager?.cancel(pendingIntent)
+
+        val calendar: Calendar = Calendar.getInstance().apply {
+            timeInMillis = System.currentTimeMillis()
+            set(Calendar.HOUR_OF_DAY, hour)
+            set(Calendar.MINUTE, min)
+            set(Calendar.SECOND, 0)
+        }
+
+        if (calendar.time < Date()) { //설정한 시간에 따라, 알람이 설정이 안될 수 있으므로 달 첫번째 부터의 시간을 설정
+            calendar.add(Calendar.DAY_OF_MONTH, 1)
+        }
+
+        alarmManager?.setRepeating(
+            AlarmManager.RTC_WAKEUP,
+            calendar.timeInMillis,
+            AlarmManager.INTERVAL_DAY,
+            pendingIntent
+        )
     }
 
     private fun showLogoutDialog(){
