@@ -8,6 +8,8 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import androidx.core.app.NotificationCompat
+import kr.co.weightmanager.maanger.RealmManager
+import kr.co.weightmanager.util.OgLog
 
 class AlarmReceiver : BroadcastReceiver() {
 
@@ -20,9 +22,14 @@ class AlarmReceiver : BroadcastReceiver() {
     lateinit var notificationManager: NotificationManager
 
     override fun onReceive(context: Context, intent: Intent) {
-        notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        createNotificationChannel(context)
-        deliverNotification(context)
+
+        if(!RealmManager.isTodayDataExist()){
+            notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            createNotificationChannel(context)
+            deliverNotification(context)
+        }else{
+            OgLog.d("Today Data Exist")
+        }
     }
 
     private fun createNotificationChannel(context: Context){
