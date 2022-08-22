@@ -3,9 +3,11 @@ package kr.co.weightmanager.maanger
 import io.realm.Realm
 import io.realm.RealmResults
 import io.realm.Sort
+import kr.co.weightmanager.maanger.RealmManager.getTodayWeightData
 import kr.co.weightmanager.realm.RmWeightData
 import kr.co.weightmanager.util.OgLog
 import kr.co.weightmanager.util.UtilDate
+import kotlin.math.round
 
 object RealmManager {
 
@@ -72,8 +74,8 @@ object RealmManager {
             val yesterdayWeight = yesterdayData.weight
 
             val diff = todayWeight - yesterdayWeight
+            round(diff*10)/10
 
-            diff
         }else{
             0.0
         }

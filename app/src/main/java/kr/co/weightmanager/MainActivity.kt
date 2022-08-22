@@ -3,9 +3,9 @@ package kr.co.weightmanager
 
 import android.annotation.SuppressLint
 import android.app.AlarmManager
-import android.app.Application
 import android.app.PendingIntent
 import android.content.Intent
+import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
 import android.text.TextUtils
@@ -20,15 +20,11 @@ import androidx.core.view.GravityCompat
 import com.bumptech.glide.Glide
 import com.github.mikephil.charting.components.AxisBase
 import com.github.mikephil.charting.components.XAxis
-import com.github.mikephil.charting.data.BarData
-import com.github.mikephil.charting.data.BarDataSet
-import com.github.mikephil.charting.data.BarEntry
+import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.formatter.ValueFormatter
-import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
-import io.realm.Realm
 import io.realm.RealmList
 import kr.co.weightmanager.databinding.ActivityMainBinding
 import kr.co.weightmanager.dialog.AlarmDialog
@@ -43,9 +39,9 @@ import kr.co.weightmanager.realm.RmWeightData
 import kr.co.weightmanager.util.OgLog
 import kr.co.weightmanager.util.VersionCheck
 import java.util.*
-import kotlin.collections.ArrayList
 import kotlin.math.ceil
 import kotlin.math.min
+import kotlin.math.round
 
 
 class MainActivity : AppCompatActivity() {
@@ -82,9 +78,11 @@ class MainActivity : AppCompatActivity() {
         todayWeightData = RealmManager.getTodayWeightData()
         dailyDiff = RealmManager.getDailyDiff()
         weeklyWeight = RealmManager.getWeekAvgWeight()
-        weeklyDiff = RealmManager.getWeeklyDiff()
+        weeklyDiff = todayWeightData.weight - weeklyWeight
+        weeklyDiff = round(weeklyDiff * 10) / 10
         monthlyWeight = RealmManager.getMonthAvgWeight()
-        monthlyDiff = RealmManager.getWeeklyDiff()
+        monthlyDiff = todayWeightData.weight - monthlyWeight
+        monthlyDiff = round(monthlyDiff * 10) / 10
 
         alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager?
     }
@@ -247,7 +245,7 @@ class MainActivity : AppCompatActivity() {
             axisMaxWeight = ((axisMaxWeight / 5) + 1) * 5
         }
 
-        binding.bcChart.run {
+        binding.lcChart.run {
             axisRight.isEnabled = false
 
             axisLeft.run {
@@ -268,7 +266,7 @@ class MainActivity : AppCompatActivity() {
         }
 
 
-        val dataVals = ArrayList<BarEntry>()
+        /*val dataVals = ArrayList<BarEntry>()
         val colors = IntArray(weightList.size)
 
         for(i: Int in 0 until weightList.size){
@@ -295,7 +293,33 @@ class MainActivity : AppCompatActivity() {
 
         val data = BarData(dataSets)
         binding.bcChart.data = data
-        binding.bcChart.invalidate()
+        binding.bcChart.invalidate()*/
+
+        var entryList = ArrayList<Entry>()
+        val lineData = LineData()
+
+        for(i: Int in 0 until weightList.size){
+            entryList.add(Entry(i.toFloat(), weightList[i]!!.weight.toFloat()))
+        }
+
+        val lineDataSet = LineDataSet(entryList, "전체 현황")
+        lineDataSet.run {
+            lineWidth = 3.0f
+            circleRadius = 6.0f
+            setDrawValues(false)
+            setDrawCircleHole(true)
+            setDrawCircles(true)
+            setDrawHorizontalHighlightIndicator(false)
+            setDrawHighlightIndicators(false)
+            color = Color.rgb(255, 155, 155)
+            setCircleColor(Color.rgb(255, 155, 155))
+        }
+
+        lineData.addDataSet(lineDataSet)
+
+        binding.lcChart.data = lineData
+        binding.lcChart.invalidate()
+
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
