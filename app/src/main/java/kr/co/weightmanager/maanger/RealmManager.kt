@@ -53,7 +53,7 @@ object RealmManager {
         return weightData!!
     }
 
-    private fun getYesterdayWeightData(): RmWeightData? {
+    fun getYesterdayWeightData(): RmWeightData? {
         val weightList = Realm.getDefaultInstance().where(RmWeightData::class.java)
             .sort("dateTime", Sort.DESCENDING)
             .findAll()

@@ -49,6 +49,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var binding : ActivityMainBinding
     var  weightList = RealmList<RmWeightData>()
     private lateinit var todayWeightData: RmWeightData
+    private var yesterdayWeightData: RmWeightData? = null
     private var dailyDiff = 0.0
     private var weeklyWeight = 0.0
     private var weeklyDiff = 0.0
@@ -76,6 +77,12 @@ class MainActivity : AppCompatActivity() {
     private fun initData(){
         weightList.addAll(RealmManager.getWeightResults())
         todayWeightData = RealmManager.getTodayWeightData()
+        yesterdayWeightData = RealmManager.getYesterdayWeightData()
+
+        if(yesterdayWeightData == null){
+            yesterdayWeightData = todayWeightData
+        }
+
         dailyDiff = RealmManager.getDailyDiff()
         weeklyWeight = RealmManager.getWeekAvgWeight()
         weeklyDiff = todayWeightData.weight - weeklyWeight
@@ -92,7 +99,9 @@ class MainActivity : AppCompatActivity() {
 
         OgLog.d("initView start")
 
-        binding.tvDailyWeight.text = "${String.format("%.1f", todayWeightData.weight)}kg"
+        binding.tvTodayWeight.text = "Today : ${String.format("%.1f", todayWeightData.weight)}kg"
+
+        binding.tvDailyWeight.text = "${String.format("%.1f", yesterdayWeightData!!.weight)}kg"
         binding.tvDailyDiff.text = String.format("%.1f", dailyDiff)
 
         if(dailyDiff < 0.0){
