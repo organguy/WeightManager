@@ -10,4 +10,11 @@
     <color name="chart_max">#FFFA0055</color>
     <color name="chart_min">#FF8BC34A</color>
     <color name="chart_normal">#FFFFEB3B</color>
+
+    <color name="cmyk_yellow">#ebed03</color>
+    <color name="cmyk_blue">#01e1ff</color>
+    <color name="cmyk_pink">#ff009b</color>
+    <color name="cmyk_white">#fefcf7</color>
+    <color name="cmyk_purple">#35356c</color>
+
 </resources>

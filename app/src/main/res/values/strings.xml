@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">WeightManager</string>
+    <string name="app_name">Weight Manager</string>
     <string name="msg_write_weight">오늘의 몸무게를 입력해 주세요.</string>
     <string name="msg_write_weight_success">몸무게 입력 성공!!!</string>
     <string name="msg_write_weight_fail">몸무게 입력 실패!!!</string>

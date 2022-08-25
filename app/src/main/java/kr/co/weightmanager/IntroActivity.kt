@@ -94,7 +94,7 @@ class IntroActivity : AppCompatActivity() {
             }
         }
 
-        binding.loginButton.setOnClickListener {
+        binding.ibLogin.setOnClickListener {
             getResult.launch(client.signInIntent)
         }
     }
