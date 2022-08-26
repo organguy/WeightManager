@@ -22,4 +22,5 @@
     <string name="weekly">Weekly</string>
     <string name="monthly">Monthly</string>
     <string name="msg_put_today_weight">오늘의 체중을 입력하세요.</string>
+    <string name="google_sign_in">Sign In With Google</string>
 </resources>

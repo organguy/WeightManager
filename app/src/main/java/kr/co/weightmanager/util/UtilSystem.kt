@@ -7,9 +7,9 @@ class UtilSystem {
     companion object{
         fun checkNetworkState(context: Context): Boolean{
             val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-            return connectivityManager.isDefaultNetworkActive
+            val currentNetwork = connectivityManager.activeNetwork
+
+            return currentNetwork != null
         }
-
-
     }
 }

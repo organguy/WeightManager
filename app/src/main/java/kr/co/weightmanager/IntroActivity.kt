@@ -3,6 +3,7 @@ package kr.co.weightmanager
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -69,6 +70,7 @@ class IntroActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
 
         if(auth.currentUser == null){
+            stopAnimateLogo()
             initGoogleLogin()
         }else{
             OgLog.d(auth.currentUser!!.uid)
@@ -91,10 +93,12 @@ class IntroActivity : AppCompatActivity() {
                 firebaseAuthWithGoogle(account!!.idToken)
             } catch (e: ApiException) {
                 Toast.makeText(this, e.localizedMessage, Toast.LENGTH_SHORT).show()
+                stopAnimateLogo()
             }
         }
 
-        binding.ibLogin.setOnClickListener {
+        binding.llLogin.setOnClickListener {
+            playAnimateLogo()
             getResult.launch(client.signInIntent)
         }
     }
@@ -206,5 +210,15 @@ class IntroActivity : AppCompatActivity() {
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
         finish()
+    }
+
+    private fun playAnimateLogo(){
+        binding.llLogin.visibility = View.GONE
+        binding.lavLogo.resumeAnimation()
+    }
+
+    private fun stopAnimateLogo(){
+        binding.llLogin.visibility = View.VISIBLE
+        binding.lavLogo.pauseAnimation()
     }
 }
