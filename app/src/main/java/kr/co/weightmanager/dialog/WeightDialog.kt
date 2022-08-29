@@ -39,6 +39,7 @@ class WeightDialog : DialogFragment() {
 
         binding.btCancel.setOnClickListener {
             dismiss()
+            activity?.finish()
         }
 
         return binding.root

@@ -30,7 +30,9 @@
         <activity
             android:name=".IntroActivity"
             android:exported="true"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait"
+            android:theme="@style/FullScreenTheme"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
