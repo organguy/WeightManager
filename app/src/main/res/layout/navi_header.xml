@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    >
 
 
     <ImageView
@@ -24,7 +25,11 @@
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
         android:text ="홍길동"
-        android:textSize="20sp"/>
+        android:textSize="20sp"
+        android:fontFamily="@font/silk_regular"
+        android:textColor="@color/cmyk_yellow"
+        android:textStyle="bold"
+        />
 
     <TextView
         android:id="@+id/tv_nav_info"
@@ -32,7 +37,9 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="20, 남자"
-        android:textSize="14sp"/>
-
-
+        android:textSize="14sp"
+        android:fontFamily="@font/silk_regular"
+        android:textColor="@color/cmyk_yellow"
+        android:textStyle="bold"
+        />
 </LinearLayout>

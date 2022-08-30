@@ -229,6 +229,9 @@
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/navi_header"
         app:menu="@menu/navi_menu"
+        app:itemTextAppearance="@style/MenuItemStyle"
+        android:background="@color/cmyk_blue"
+        app:itemTextColor="@color/cmyk_purple"
         />
 
 </androidx.drawerlayout.widget.DrawerLayout>

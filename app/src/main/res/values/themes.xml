@@ -19,4 +19,12 @@
     <style name="FullScreenTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowFullscreen">true</item>
     </style>
+
+
+    <style name="MenuItemStyle" parent="android:Widget.TextView">
+        <item name="android:fontFamily">@font/silk_regular</item>
+        <item name="android:textSize">20dp</item>
+    </style>
+
+
 </resources>
