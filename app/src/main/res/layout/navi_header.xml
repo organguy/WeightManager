@@ -8,24 +8,14 @@
     tools:context=".MainActivity"
     >
 
-
-    <ImageView
-        android:id="@+id/iv_nav_profile"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginTop="50dp"
-        android:layout_gravity="center"
-        android:src="@mipmap/ic_launcher"
-        />
-
     <TextView
         android:id="@+id/tv_nav_profile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="40dp"
         android:text ="홍길동"
-        android:textSize="20sp"
+        android:textSize="30dp"
         android:fontFamily="@font/silk_regular"
         android:textColor="@color/cmyk_yellow"
         android:textStyle="bold"
@@ -41,5 +31,6 @@
         android:fontFamily="@font/silk_regular"
         android:textColor="@color/cmyk_yellow"
         android:textStyle="bold"
+        android:layout_marginTop="8dp"
         />
 </LinearLayout>

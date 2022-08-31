@@ -150,17 +150,17 @@ class MainActivity : AppCompatActivity() {
         val navView = binding.nvNavigation
         val headerView = navView.getHeaderView(0)
 
-        val ivNavProfile = headerView.findViewById<ImageView>(R.id.iv_nav_profile)
+        //val ivNavProfile = headerView.findViewById<ImageView>(R.id.iv_nav_profile)
         val tvNavProfile = headerView.findViewById<TextView>(R.id.tv_nav_profile)
         val tvNavInfo = headerView.findViewById<TextView>(R.id.tv_nav_info)
         val authUser = FirebaseAuth.getInstance().currentUser
 
-        if (authUser!!.photoUrl != null) {
+        /*if (authUser!!.photoUrl != null) {
             Glide.with(this)
                 .load(authUser.photoUrl)
                 .into(ivNavProfile)
-        }
-        tvNavProfile.text = authUser.displayName
+        }*/
+        tvNavProfile.text = authUser!!.displayName
         tvNavInfo.text = authUser.email
     }
 
