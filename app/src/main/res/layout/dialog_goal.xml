@@ -10,7 +10,7 @@
     <LinearLayout
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:background="@color/white"
+        android:background="@color/cmyk_blue"
         android:orientation="vertical"
         android:gravity="center_horizontal"
         android:padding="24dp"
@@ -20,12 +20,20 @@
             android:layout_height="wrap_content"
             android:text="@string/msg_write_goal"
             android:layout_gravity="center"
+            android:textSize="20dp"
+            android:fontFamily="@font/silk_regular"
+            android:textStyle="bold"
+            android:textColor="@color/cmyk_yellow"
             />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_marginTop="12dp"
+            android:gravity="right"
+            android:padding="8dp"
+            android:background="@color/cmyk_white"
             >
 
             <EditText
@@ -34,16 +42,23 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:inputType="numberDecimal"
-                android:hint="@string/hint_write_weight"
+                android:hint="80.0"
                 android:gravity="right"
                 android:paddingRight="4dp"
+                android:background="@null"
+                android:textColor="@color/cmyk_purple"
+                android:textColorHint="@color/cmyk_blue"
+                android:fontFamily="@font/silk_regular"
+                android:textSize="20dp"
                 />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/kilogram"
-                android:textSize="18dp"
+                android:textSize="14dp"
+                android:fontFamily="@font/silk_regular"
+                android:textColor="@color/cmyk_purple"
                 />
 
         </LinearLayout>
@@ -52,24 +67,32 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="20dp"
             >
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/bt_cancel"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
                 android:layout_weight="1"
                 android:text="@string/cancel"
+                android:background="@color/cmyk_pink"
+                android:textColor="@color/cmyk_white"
+                android:textSize="18dp"
+                android:fontFamily="@font/silk_regular"
                 />
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/bt_ok"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
                 android:layout_marginLeft="12dp"
                 android:layout_weight="1"
                 android:text="@string/ok"
+                android:background="@color/cmyk_pink"
+                android:textColor="@color/cmyk_white"
+                android:textSize="18dp"
+                android:fontFamily="@font/silk_regular"
                 />
 
 

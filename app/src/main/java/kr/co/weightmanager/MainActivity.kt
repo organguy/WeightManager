@@ -195,7 +195,7 @@ class MainActivity : AppCompatActivity() {
         val goal = PropertyManager.getGoal()
 
         if(!TextUtils.isEmpty(goal)){
-            menuItemGoal.title = "${getString(R.string.menu_item_goal)}     -      ${goal}kg"
+            menuItemGoal.title = "${getString(R.string.menu_item_goal)} - ${goal}kg"
         }else{
             menuItemGoal.title = getString(R.string.menu_item_goal)
         }
@@ -209,14 +209,14 @@ class MainActivity : AppCompatActivity() {
             val hour = alarmTime!!.split(",")[0]
             val min = alarmTime.split(",")[1]
 
-            menuItemAlarm.title = "${getString(R.string.menu_item_alram)}     -     $hour 시 $min 분"
+            menuItemAlarm.title = "${getString(R.string.menu_item_alram)} - $hour 시 $min 분"
         }else{
             menuItemAlarm.title = getString(R.string.menu_item_alram)
         }
     }
 
     private fun iniNavItemVersion(){
-        menuItemVersion.title = "${getString(R.string.menu_item_version)}     -     ${BuildConfig.VERSION_NAME}"
+        menuItemVersion.title = "${getString(R.string.menu_item_version)} - ${BuildConfig.VERSION_NAME}"
 
         val badgeVersion = menuItemVersion.actionView as TextView
         badgeVersion.gravity = Gravity.CENTER_VERTICAL
