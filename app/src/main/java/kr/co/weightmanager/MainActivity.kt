@@ -99,7 +99,7 @@ class MainActivity : AppCompatActivity() {
 
         OgLog.d("initView start")
 
-        binding.tvTodayWeight.text = "Today : ${String.format("%.1f", todayWeightData.weight)}kg"
+        binding.tvTodayWeight.text = "${String.format("%.1f", todayWeightData.weight)}kg"
 
         binding.tvDailyWeight.text = "${String.format("%.1f", yesterdayWeightData!!.weight)}kg"
         binding.tvDailyDiff.text = String.format("%.1f", dailyDiff)
