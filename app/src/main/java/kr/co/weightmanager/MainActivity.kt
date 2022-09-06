@@ -55,6 +55,7 @@ class MainActivity : AppCompatActivity() {
     private var weeklyDiff = 0.0
     private var monthlyWeight = 0.0
     private var monthlyDiff = 0.0
+    private var remainWeight = 0.0
 
     lateinit var menuItemGoal: MenuItem
     lateinit var menuItemAlarm: MenuItem
@@ -90,6 +91,12 @@ class MainActivity : AppCompatActivity() {
         monthlyWeight = RealmManager.getMonthAvgWeight()
         monthlyDiff = todayWeightData.weight - monthlyWeight
         monthlyDiff = round(monthlyDiff * 10) / 10
+
+        if(!TextUtils.isEmpty(PropertyManager.getGoal())){
+            remainWeight = todayWeightData.weight - PropertyManager.getGoal()!!.toDouble();
+        }else{
+            showGoalSettingDialog()
+        }
 
         alarmManager = getSystemService(ALARM_SERVICE) as AlarmManager?
     }
@@ -133,6 +140,13 @@ class MainActivity : AppCompatActivity() {
         }else{
             binding.ivMonthlyDiff.setImageResource(R.drawable.ic_diff_arrow_up)
         }
+
+        if(!TextUtils.isEmpty(PropertyManager.getGoal())){
+            binding.tvRemain.text = "Remain : ${String.format("%.1f", remainWeight)}kg"
+        }else{
+            binding.tvRemain.text = "Remain : ??.?kg"
+        }
+
     }
 
     private fun initNavi(){
@@ -360,6 +374,8 @@ class MainActivity : AppCompatActivity() {
 
         if(!TextUtils.isEmpty(goal)){
             menuItemGoal.title = "${getString(R.string.menu_item_goal)} - $goal"
+            remainWeight = todayWeightData.weight - PropertyManager.getGoal()!!.toDouble();
+            binding.tvRemain.text = "Remain : ${String.format("%.1f", remainWeight)}kg"
         }else{
             menuItemGoal.title = getString(R.string.menu_item_goal)
         }
