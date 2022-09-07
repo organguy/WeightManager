@@ -9,7 +9,7 @@
     <string name="ok">OK</string>
     <string name="network_disconnect">네트워크 연결 확인</string>
     <string name="msg_network_disconnect">네트워크 연결상태가 양호하지 않습니다.\n연결상태 확인 후 다시 실행해 주세요.</string>
-    <string name="daily">Daily</string>
+    <string name="daily">1 day</string>
     <string name="menu_item_goal">Goal</string>
     <string name="menu_item_alram">Alarm</string>
     <string name="menu_item_version">Version</string>
