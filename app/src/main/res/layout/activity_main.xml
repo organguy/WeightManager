@@ -135,41 +135,22 @@
                     android:textSize="12dp"
                     android:fontFamily="@font/silk_regular"
                     />
-
-
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@color/black"
                 android:orientation="vertical"
                 android:padding="8dp"
+                android:background="@drawable/dashboard_item_border"
+                android:gravity="center"
                 android:layout_marginLeft="12dp"
                 >
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/weekly"
-                    android:textColor="@color/white"
-                    />
-
-                <TextView
-                    android:id="@+id/tv_weekly_weight"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="60kg"
-                    android:textSize="28dp"
-                    android:textColor="@color/white"
-                    />
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="right"
                     android:orientation="horizontal"
                     android:gravity="center_vertical"
                     >
@@ -187,11 +168,35 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="-0.8"
-                        android:textSize="16dp"
-                        android:textColor="@color/white"
+                        android:textSize="12dp"
+                        android:textColor="#9F9B9B"
+                        android:fontFamily="@font/silk_regular"
                         />
 
                 </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_weekly_weight"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="60kg"
+                    android:textSize="24dp"
+                    android:textColor="@color/cmyk_yellow"
+                    android:fontFamily="@font/silk_regular"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="28dp"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/weekly"
+                    android:textColor="#9F9B9B"
+                    android:textSize="12dp"
+                    android:fontFamily="@font/silk_regular"
+                    />
+
 
             </LinearLayout>
 
