@@ -20,7 +20,7 @@
     <string name="msg_logout">로그아웃 하시겠습니까?</string>
     <string name="msg_re_logout">로그아웃 실패 다시 시도해 주세요.</string>
     <string name="weekly">7 days</string>
-    <string name="monthly">Monthly</string>
+    <string name="monthly">30 days</string>
     <string name="msg_put_today_weight">오늘의 체중을 입력하세요.</string>
     <string name="google_sign_in">Sign In With Google</string>
 </resources>
