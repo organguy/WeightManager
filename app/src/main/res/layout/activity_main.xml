@@ -71,205 +71,211 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="220dp"
-            android:padding="20dp"
-            android:background="@drawable/dashboard_border"
+            android:layout_height="match_parent"
             android:layout_marginTop="20dp"
+            android:orientation="vertical"
+            android:background="@drawable/dashboard_border"
             >
-
             <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="vertical"
-                android:padding="8dp"
-                android:background="@drawable/dashboard_item_border"
-                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="220dp"
+                android:padding="20dp"
                 >
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:padding="8dp"
+                    android:background="@drawable/dashboard_item_border"
+                    android:gravity="center"
                     >
 
-                    <ImageView
-                        android:id="@+id/iv_daily_diff"
+                    <LinearLayout
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:src="@drawable/ic_diff_arrow_down"
-                        android:scaleType="fitCenter"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        >
+
+                        <ImageView
+                            android:id="@+id/iv_daily_diff"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/ic_diff_arrow_down"
+                            android:scaleType="fitCenter"
+                            />
+
+                        <TextView
+                            android:id="@+id/tv_daily_diff"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="-0.8"
+                            android:textSize="12dp"
+                            android:textColor="#9F9B9B"
+                            android:fontFamily="@font/silk_regular"
+                            />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/tv_daily_weight"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="60kg"
+                        android:textSize="24dp"
+                        android:textColor="@color/cmyk_yellow"
+                        android:fontFamily="@font/silk_regular"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginBottom="28dp"
                         />
 
                     <TextView
-                        android:id="@+id/tv_daily_diff"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="-0.8"
-                        android:textSize="12dp"
+                        android:text="@string/daily"
                         android:textColor="#9F9B9B"
+                        android:textSize="12dp"
                         android:fontFamily="@font/silk_regular"
                         />
-
                 </LinearLayout>
-
-                <TextView
-                    android:id="@+id/tv_daily_weight"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="60kg"
-                    android:textSize="24dp"
-                    android:textColor="@color/cmyk_yellow"
-                    android:fontFamily="@font/silk_regular"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginBottom="28dp"
-                    />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/daily"
-                    android:textColor="#9F9B9B"
-                    android:textSize="12dp"
-                    android:fontFamily="@font/silk_regular"
-                    />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="vertical"
-                android:padding="8dp"
-                android:background="@drawable/dashboard_item_border"
-                android:gravity="center"
-                android:layout_marginLeft="12dp"
-                >
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:padding="8dp"
+                    android:background="@drawable/dashboard_item_border"
+                    android:gravity="center"
+                    android:layout_marginLeft="12dp"
                     >
 
-                    <ImageView
-                        android:id="@+id/iv_weekly_diff"
+                    <LinearLayout
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:src="@drawable/ic_diff_arrow_down"
-                        android:scaleType="fitCenter"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        >
+
+                        <ImageView
+                            android:id="@+id/iv_weekly_diff"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/ic_diff_arrow_down"
+                            android:scaleType="fitCenter"
+                            />
+
+                        <TextView
+                            android:id="@+id/tv_weekly_diff"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="-0.8"
+                            android:textSize="12dp"
+                            android:textColor="#9F9B9B"
+                            android:fontFamily="@font/silk_regular"
+                            />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/tv_weekly_weight"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="60kg"
+                        android:textSize="24dp"
+                        android:textColor="@color/cmyk_yellow"
+                        android:fontFamily="@font/silk_regular"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginBottom="28dp"
                         />
 
                     <TextView
-                        android:id="@+id/tv_weekly_diff"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="-0.8"
-                        android:textSize="12dp"
+                        android:text="@string/weekly"
                         android:textColor="#9F9B9B"
+                        android:textSize="12dp"
                         android:fontFamily="@font/silk_regular"
                         />
 
+
                 </LinearLayout>
-
-                <TextView
-                    android:id="@+id/tv_weekly_weight"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="60kg"
-                    android:textSize="24dp"
-                    android:textColor="@color/cmyk_yellow"
-                    android:fontFamily="@font/silk_regular"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginBottom="28dp"
-                    />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/weekly"
-                    android:textColor="#9F9B9B"
-                    android:textSize="12dp"
-                    android:fontFamily="@font/silk_regular"
-                    />
-
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="vertical"
-                android:padding="8dp"
-                android:background="@drawable/dashboard_item_border"
-                android:gravity="center"
-                android:layout_marginLeft="12dp"
-                >
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:padding="8dp"
+                    android:background="@drawable/dashboard_item_border"
+                    android:gravity="center"
+                    android:layout_marginLeft="12dp"
                     >
 
-                    <ImageView
-                        android:id="@+id/iv_monthly_diff"
+                    <LinearLayout
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:src="@drawable/ic_diff_arrow_down"
-                        android:scaleType="fitCenter"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        >
+
+                        <ImageView
+                            android:id="@+id/iv_monthly_diff"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/ic_diff_arrow_down"
+                            android:scaleType="fitCenter"
+                            />
+
+                        <TextView
+                            android:id="@+id/tv_monthly_diff"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="-0.8"
+                            android:textSize="12dp"
+                            android:textColor="#9F9B9B"
+                            android:fontFamily="@font/silk_regular"
+                            />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/tv_monthly_weight"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="60kg"
+                        android:textSize="24dp"
+                        android:textColor="@color/cmyk_yellow"
+                        android:fontFamily="@font/silk_regular"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginBottom="28dp"
                         />
 
                     <TextView
-                        android:id="@+id/tv_monthly_diff"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="-0.8"
-                        android:textSize="12dp"
+                        android:text="@string/monthly"
                         android:textColor="#9F9B9B"
-                        android:fontFamily="@font/silk_regular"
-                        />
+                        android:textSize="12dp"
+                        android:fontFamily="@font/silk_regular" />
 
                 </LinearLayout>
 
-                <TextView
-                    android:id="@+id/tv_monthly_weight"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="60kg"
-                    android:textSize="24dp"
-                    android:textColor="@color/cmyk_yellow"
-                    android:fontFamily="@font/silk_regular"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginBottom="28dp"
-                    />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/monthly"
-                    android:textColor="#9F9B9B"
-                    android:textSize="12dp"
-                    android:fontFamily="@font/silk_regular" />
-
             </LinearLayout>
+
+            <com.github.mikephil.charting.charts.LineChart
+                android:id="@+id/lc_chart"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="20dp"
+                />
 
         </LinearLayout>
-
-        <com.github.mikephil.charting.charts.LineChart
-            android:id="@+id/lc_chart"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#CFCFCF"
-            />
-
 
     </LinearLayout>
 
