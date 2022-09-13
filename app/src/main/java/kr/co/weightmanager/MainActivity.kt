@@ -16,6 +16,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import com.bumptech.glide.Glide
 import com.github.mikephil.charting.components.AxisBase
@@ -289,35 +290,6 @@ class MainActivity : AppCompatActivity() {
         }
 
 
-        /*val dataVals = ArrayList<BarEntry>()
-        val colors = IntArray(weightList.size)
-
-        for(i: Int in 0 until weightList.size){
-            dataVals.add(BarEntry(i.toFloat(), weightList[i]!!.weight.toFloat()))
-
-            when (weightList[i]!!.weight) {
-                maxWeight -> {
-                    colors[i] = R.color.chart_max
-                }
-                minWeight -> {
-                    colors[i] = R.color.chart_min
-                }
-                else -> {
-                    colors[i] = R.color.chart_normal
-                }
-            }
-        }
-
-        val barDataSet = BarDataSet(dataVals, "전체 현황")
-        barDataSet.setColors(colors, this)
-
-        val dataSets = ArrayList<IBarDataSet>()
-        dataSets.add(barDataSet)
-
-        val data = BarData(dataSets)
-        binding.bcChart.data = data
-        binding.bcChart.invalidate()*/
-
         var entryList = ArrayList<Entry>()
         val lineData = LineData()
 
@@ -330,11 +302,11 @@ class MainActivity : AppCompatActivity() {
             lineWidth = 3.0f
             circleRadius = 6.0f
             setDrawValues(false)
-            setDrawCircleHole(true)
-            setDrawCircles(true)
+            setDrawCircleHole(false)
+            setDrawCircles(false)
             setDrawHorizontalHighlightIndicator(false)
             setDrawHighlightIndicators(false)
-            color = Color.rgb(255, 155, 155)
+            color = ContextCompat.getColor(this@MainActivity, R.color.cmyk_pink)
             setCircleColor(Color.rgb(255, 155, 155))
         }
 
