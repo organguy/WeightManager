@@ -17,6 +17,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.GravityCompat
 import com.bumptech.glide.Glide
 import com.github.mikephil.charting.components.AxisBase
@@ -38,6 +39,7 @@ import kr.co.weightmanager.maanger.PropertyManager
 import kr.co.weightmanager.maanger.RealmManager
 import kr.co.weightmanager.realm.RmWeightData
 import kr.co.weightmanager.util.OgLog
+import kr.co.weightmanager.util.UtilSystem
 import kr.co.weightmanager.util.VersionCheck
 import java.util.*
 import kotlin.math.ceil
@@ -273,10 +275,17 @@ class MainActivity : AppCompatActivity() {
             axisRight.isEnabled = false
 
             axisLeft.run {
+                labelCount = 2
+                typeface = ResourcesCompat.getFont(this@MainActivity, R.font.silk_regular)
+                textColor = ContextCompat.getColor(this@MainActivity, R.color.cmyk_purple)
+                textSize = UtilSystem.convertDpToPx(this@MainActivity, 7)
+                extraBottomOffset = 10.0f
                 setDrawLabels(true)
                 setDrawGridLines(false)
                 axisMaximum = axisMaxWeight.toFloat()
                 axisMinimum = axisMinWeight.toFloat()
+                axisLineColor = ContextCompat.getColor(this@MainActivity, R.color.cmyk_purple)
+                axisLineWidth = 1.5f
             }
 
             xAxis.run {
