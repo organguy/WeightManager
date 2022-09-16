@@ -12,17 +12,17 @@ import android.text.TextUtils
 import android.view.Gravity
 import android.view.MenuItem
 import android.view.View
-import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.GravityCompat
-import com.bumptech.glide.Glide
 import com.github.mikephil.charting.components.AxisBase
 import com.github.mikephil.charting.components.XAxis
-import com.github.mikephil.charting.data.*
+import com.github.mikephil.charting.data.Entry
+import com.github.mikephil.charting.data.LineData
+import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -96,7 +96,7 @@ class MainActivity : AppCompatActivity() {
         monthlyDiff = round(monthlyDiff * 10) / 10
 
         if(!TextUtils.isEmpty(PropertyManager.getGoal())){
-            remainWeight = todayWeightData.weight - PropertyManager.getGoal()!!.toDouble();
+            remainWeight = todayWeightData.weight - PropertyManager.getGoal()!!.toDouble()
         }else{
             showGoalSettingDialog()
         }
@@ -259,14 +259,14 @@ class MainActivity : AppCompatActivity() {
         val minWeight = RealmManager.getMinWeight()
 
         var axisMinWeight = if(!TextUtils.isEmpty(goalWeight)){
-            min(goalWeight!!.toDouble(), minWeight.toDouble()).toInt()
+            min(goalWeight!!.toDouble(), minWeight).toInt()
         }else{
-            minWeight.toDouble().toInt()
+            minWeight.toInt()
         }
 
         axisMinWeight = (axisMinWeight / 5) * 5
 
-        var axisMaxWeight = ceil(maxWeight.toDouble()).toInt()
+        var axisMaxWeight = ceil(maxWeight).toInt()
         if(axisMaxWeight % 5 != 0){
             axisMaxWeight = ((axisMaxWeight / 5) + 1) * 5
         }
@@ -289,8 +289,16 @@ class MainActivity : AppCompatActivity() {
             }
 
             xAxis.run {
+                labelCount = 2
+                typeface = ResourcesCompat.getFont(this@MainActivity, R.font.silk_regular)
+                textColor = ContextCompat.getColor(this@MainActivity, R.color.cmyk_purple)
+                textSize = UtilSystem.convertDpToPx(this@MainActivity, 7)
                 position = XAxis.XAxisPosition.BOTTOM
                 setDrawGridLines(false)
+                axisLineColor = ContextCompat.getColor(this@MainActivity, R.color.cmyk_purple)
+                axisLineWidth = 1.5f
+
+
                 valueFormatter = MyXAxisFormatter()
             }
 
