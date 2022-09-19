@@ -157,6 +157,7 @@ class MainActivity : AppCompatActivity() {
 
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         supportActionBar!!.setHomeAsUpIndicator(R.drawable.ic_baseline_dehaze_24)
+        supportActionBar!!.setDisplayShowTitleEnabled(false)
 
         initProfile()
         initNavItem()
